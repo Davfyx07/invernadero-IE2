@@ -1,0 +1,319 @@
+{
+  "project": "GreenTrack",
+  "version": "1.0.0",
+  "database": "greentrack",
+  "entities": [
+    {
+      "name": "Usuario",
+      "table": "usuarios",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "pk": true,
+          "nullable": false
+        },
+        {
+          "name": "nombre",
+          "type": "String",
+          "pk": false,
+          "nullable": false,
+          "maxLength": 100
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "pk": false,
+          "nullable": false,
+          "unique": true,
+          "maxLength": 150
+        },
+        {
+          "name": "password",
+          "type": "String",
+          "pk": false,
+          "nullable": false
+        },
+        {
+          "name": "rol",
+          "type": "Enum",
+          "pk": false,
+          "nullable": false,
+          "enumName": "rol_enum",
+          "values": [
+            "ADMIN",
+            "OPERARIO"
+          ]
+        },
+        {
+          "name": "activo",
+          "type": "Boolean",
+          "pk": false,
+          "nullable": false,
+          "default": true
+        },
+        {
+          "name": "creadoEn",
+          "type": "DateTime",
+          "pk": false,
+          "nullable": false,
+          "default": "NOW()"
+        }
+      ]
+    },
+    {
+      "name": "Invernadero",
+      "table": "invernaderos",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "pk": true,
+          "nullable": false
+        },
+        {
+          "name": "nombre",
+          "type": "String",
+          "pk": false,
+          "nullable": false,
+          "maxLength": 100
+        },
+        {
+          "name": "ubicacion",
+          "type": "String",
+          "pk": false,
+          "nullable": true,
+          "maxLength": 200
+        },
+        {
+          "name": "descripcion",
+          "type": "String",
+          "pk": false,
+          "nullable": true
+        },
+        {
+          "name": "creadoEn",
+          "type": "DateTime",
+          "pk": false,
+          "nullable": false,
+          "default": "NOW()"
+        }
+      ]
+    },
+    {
+      "name": "Zona",
+      "table": "zonas",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "pk": true,
+          "nullable": false
+        },
+        {
+          "name": "nombre",
+          "type": "String",
+          "pk": false,
+          "nullable": false,
+          "maxLength": 100
+        },
+        {
+          "name": "capacidad",
+          "type": "Integer",
+          "pk": false,
+          "nullable": true
+        },
+        {
+          "name": "invernadero_id",
+          "type": "FK",
+          "pk": false,
+          "nullable": false,
+          "references": "invernaderos(id)",
+          "onDelete": "CASCADE"
+        }
+      ]
+    },
+    {
+      "name": "Cultivo",
+      "table": "cultivos",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "pk": true,
+          "nullable": false
+        },
+        {
+          "name": "especie",
+          "type": "String",
+          "pk": false,
+          "nullable": false,
+          "maxLength": 100
+        },
+        {
+          "name": "variedad",
+          "type": "String",
+          "pk": false,
+          "nullable": true,
+          "maxLength": 100
+        },
+        {
+          "name": "fechaSiembra",
+          "type": "Date",
+          "pk": false,
+          "nullable": false
+        },
+        {
+          "name": "fechaCosecha",
+          "type": "Date",
+          "pk": false,
+          "nullable": true
+        },
+        {
+          "name": "estado",
+          "type": "Enum",
+          "pk": false,
+          "nullable": false,
+          "enumName": "estado_cultivo",
+          "values": [
+            "ACTIVO",
+            "COSECHADO",
+            "PERDIDO"
+          ],
+          "default": "ACTIVO"
+        },
+        {
+          "name": "zona_id",
+          "type": "FK",
+          "pk": false,
+          "nullable": false,
+          "references": "zonas(id)",
+          "onDelete": "RESTRICT"
+        },
+        {
+          "name": "usuario_id",
+          "type": "FK",
+          "pk": false,
+          "nullable": false,
+          "references": "usuarios(id)",
+          "onDelete": "RESTRICT"
+        }
+      ]
+    },
+    {
+      "name": "Insumo",
+      "table": "insumos",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "pk": true,
+          "nullable": false
+        },
+        {
+          "name": "nombre",
+          "type": "String",
+          "pk": false,
+          "nullable": false,
+          "maxLength": 100
+        },
+        {
+          "name": "tipo",
+          "type": "Enum",
+          "pk": false,
+          "nullable": false,
+          "enumName": "tipo_insumo",
+          "values": [
+            "FERTILIZANTE",
+            "PESTICIDA",
+            "AGUA",
+            "OTRO"
+          ]
+        },
+        {
+          "name": "unidadMedida",
+          "type": "String",
+          "pk": false,
+          "nullable": false,
+          "maxLength": 20
+        },
+        {
+          "name": "stockActual",
+          "type": "Double",
+          "pk": false,
+          "nullable": false,
+          "default": 0
+        }
+      ]
+    },
+    {
+      "name": "RegistroActividad",
+      "table": "registros_actividad",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "pk": true,
+          "nullable": false
+        },
+        {
+          "name": "tipo",
+          "type": "Enum",
+          "pk": false,
+          "nullable": false,
+          "enumName": "tipo_actividad",
+          "values": [
+            "RIEGO",
+            "FERTILIZACION",
+            "FUMIGACION",
+            "INSPECCION",
+            "OTRO"
+          ]
+        },
+        {
+          "name": "fecha",
+          "type": "DateTime",
+          "pk": false,
+          "nullable": false,
+          "default": "NOW()"
+        },
+        {
+          "name": "cantidad",
+          "type": "Double",
+          "pk": false,
+          "nullable": true
+        },
+        {
+          "name": "notas",
+          "type": "String",
+          "pk": false,
+          "nullable": true
+        },
+        {
+          "name": "cultivo_id",
+          "type": "FK",
+          "pk": false,
+          "nullable": false,
+          "references": "cultivos(id)",
+          "onDelete": "CASCADE"
+        },
+        {
+          "name": "insumo_id",
+          "type": "FK",
+          "pk": false,
+          "nullable": true,
+          "references": "insumos(id)",
+          "onDelete": "SET NULL"
+        },
+        {
+          "name": "usuario_id",
+          "type": "FK",
+          "pk": false,
+          "nullable": false,
+          "references": "usuarios(id)",
+          "onDelete": "RESTRICT"
+        }
+      ]
+    }
+  ]
+}

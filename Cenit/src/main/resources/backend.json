@@ -1,0 +1,80 @@
+{
+  "project": "Cenit",
+  "version": "1.0.0",
+  "package": "com.invernadero.cenit",
+  "modelJson": "modelo.json",
+
+  "entities": [
+    {
+      "name": "Usuario",
+      "endpoints": ["GET_ALL", "GET_BY_ID", "CREATE", "UPDATE", "DELETE"],
+      "pagination": true,
+      "searchBy": ["email", "nombre"]
+    },
+    {
+      "name": "Invernadero",
+      "endpoints": ["GET_ALL", "GET_BY_ID", "CREATE", "UPDATE", "DELETE"],
+      "pagination": true,
+      "searchBy": ["nombre"]
+    },
+    {
+      "name": "Zona",
+      "endpoints": ["GET_ALL", "GET_BY_ID", "CREATE", "UPDATE", "DELETE"],
+      "pagination": false,
+      "searchBy": ["nombre"]
+    },
+    {
+      "name": "Cultivo",
+      "endpoints": ["GET_ALL", "GET_BY_ID", "CREATE", "UPDATE", "DELETE"],
+      "pagination": true,
+      "searchBy": ["especie", "variedad", "estado"]
+    },
+    {
+      "name": "Insumo",
+      "endpoints": ["GET_ALL", "GET_BY_ID", "CREATE", "UPDATE", "DELETE"],
+      "pagination": false,
+      "searchBy": ["nombre", "tipo"]
+    },
+    {
+      "name": "RegistroActividad",
+      "endpoints": ["GET_ALL", "GET_BY_ID", "CREATE", "DELETE"],
+      "pagination": true,
+      "searchBy": ["tipo"]
+    }
+  ],
+
+  "security": {
+    "enabled": true,
+    "provider": "oauth2-google",
+    "publicRoutes": [
+      "/api/auth/**",
+      "/swagger-ui/**",
+      "/v3/api-docs/**"
+    ],
+    "protectedRoutes": [
+      "/api/**"
+    ],
+    "roles": {
+      "ADMIN":   ["GET_ALL", "GET_BY_ID", "CREATE", "UPDATE", "DELETE"],
+      "OPERARIO": ["GET_ALL", "GET_BY_ID", "CREATE"]
+    }
+  },
+
+  "cors": {
+    "allowedOrigins": ["http://localhost:5173"],
+    "allowedMethods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+  },
+
+  "swagger": {
+    "enabled": true,
+    "title": "Cenit API",
+    "description": "API REST para gestión de invernadero",
+    "version": "1.0.0"
+  },
+
+  "i18n": {
+    "enabled": true,
+    "defaultLocale": "es",
+    "supportedLocales": ["es", "en"]
+  }
+}

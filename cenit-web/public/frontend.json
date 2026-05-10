@@ -1,0 +1,56 @@
+{
+  "project": "cenit-web",
+  "version": "1.0.0",
+  "apiBaseUrl": "http://localhost:8080/api",
+
+  "pages": [
+    {
+      "entity": "Invernadero",
+      "route": "/invernaderos",
+      "views": ["list", "form"],
+      "listColumns": ["nombre", "ubicacion", "descripcion"],
+      "formFields": ["nombre", "ubicacion", "descripcion"]
+    },
+    {
+      "entity": "Zona",
+      "route": "/zonas",
+      "views": ["list", "form"],
+      "listColumns": ["nombre", "capacidad", "invernadero_id"],
+      "formFields": ["nombre", "capacidad", "invernadero_id"]
+    },
+    {
+      "entity": "Cultivo",
+      "route": "/cultivos",
+      "views": ["list", "form"],
+      "listColumns": ["especie", "variedad", "estado", "fechaSiembra"],
+      "formFields": ["especie", "variedad", "estado", "fechaSiembra", "fechaCosecha", "zona_id", "usuario_id"]
+    },
+    {
+      "entity": "Insumo",
+      "route": "/insumos",
+      "views": ["list", "form"],
+      "listColumns": ["nombre", "tipo", "unidadMedida", "stockActual"],
+      "formFields": ["nombre", "tipo", "unidadMedida", "stockActual"]
+    },
+    {
+      "entity": "RegistroActividad",
+      "route": "/registros",
+      "views": ["list", "form"],
+      "listColumns": ["tipo", "fecha", "cantidad", "notas"],
+      "formFields": ["tipo", "fecha", "cantidad", "notas", "cultivo_id", "insumo_id", "usuario_id"]
+    },
+    {
+      "entity": "Usuario",
+      "route": "/usuarios",
+      "views": ["list"],
+      "listColumns": ["nombre", "email", "rol", "activo"],
+      "formFields": []
+    }
+  ],
+
+  "theme": {
+    "primary": "#2e7d32",
+    "secondary": "#66bb6a",
+    "background": "#f1f8e9"
+  }
+}

@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/registro-actividads")
@@ -32,6 +31,11 @@ public class RegistroActividadController {
     @PostMapping
     public ResponseEntity<RegistroActividad> create(@RequestBody RegistroActividad registroActividad) {
         return ResponseEntity.ok(registroActividadService.save(registroActividad));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RegistroActividad> update(@PathVariable Long id, @RequestBody RegistroActividad registroActividad) {
+        return ResponseEntity.ok(registroActividadService.update(id, registroActividad));
     }
 
     @DeleteMapping("/{id}")

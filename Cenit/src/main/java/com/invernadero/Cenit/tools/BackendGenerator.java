@@ -1,4 +1,4 @@
-package com.invernadero.Cenit.tools;
+package com.invernadero.cenit.tools;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,8 +27,8 @@ import java.util.*;
  * Corre al arrancar Spring Boot. Si los archivos ya existen, los omite.
  * Para regenerar: borra la carpeta generada y reinicia.
  */
-@Component
-@Order(2)
+// @Component
+// @Order(2)
 public class BackendGenerator implements ApplicationRunner {
 
     private static final String BASE_OUTPUT = "src/main/java";

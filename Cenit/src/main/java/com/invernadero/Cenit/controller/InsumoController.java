@@ -5,7 +5,8 @@ import com.invernadero.cenit.service.InsumoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/api/insumos")
@@ -16,8 +17,8 @@ public class InsumoController {
     private final InsumoService insumoService;
 
     @GetMapping
-    public ResponseEntity<List<Insumo>> findAll() {
-        return ResponseEntity.ok(insumoService.findAll());
+    public ResponseEntity<Page<Insumo>> findAll(Pageable pageable) {
+        return ResponseEntity.ok(insumoService.findAll(pageable));
     }
 
     @GetMapping("/{id}")

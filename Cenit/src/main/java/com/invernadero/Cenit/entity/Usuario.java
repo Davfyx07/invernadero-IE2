@@ -26,7 +26,7 @@ public class Usuario {
     @Column(nullable = false)
     private Rol rol;
     @Column(nullable = false)
-    private Boolean activo;
+    private boolean activo;
     @Column(nullable = false)
     private LocalDateTime creadoEn;
 

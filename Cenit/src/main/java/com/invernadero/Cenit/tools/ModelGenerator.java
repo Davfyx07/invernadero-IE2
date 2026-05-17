@@ -1,4 +1,4 @@
-package com.invernadero.Cenit.tools;
+package com.invernadero.cenit.tools;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,8 +27,8 @@ import java.util.Set;
  * Flujo:
  *   modelo.json → ModelGenerator → V1__init.sql → Flyway → PostgreSQL
  */
-@Component
-@Order(1) // Corre antes que cualquier otro ApplicationRunner
+// @Component
+// @Order(1) // Corre antes que cualquier otro ApplicationRunner
 public class ModelGenerator implements ApplicationRunner {
 
     // ─── Mapeo tipos JSON → PostgreSQL ───────────────────────────────────────

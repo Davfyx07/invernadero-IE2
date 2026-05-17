@@ -4,7 +4,8 @@ import com.invernadero.cenit.entity.Zona;
 import com.invernadero.cenit.repository.ZonaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 @Service
@@ -13,8 +14,8 @@ public class ZonaService {
 
     private final ZonaRepository zonaRepository;
 
-    public List<Zona> findAll() {
-        return zonaRepository.findAll();
+    public Page<Zona> findAll(Pageable pageable) {
+        return zonaRepository.findAll(pageable);
     }
 
     public Optional<Zona> findById(Long id) {

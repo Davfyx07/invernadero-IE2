@@ -1,4 +1,4 @@
-package com.invernadero.Cenit;
+package com.invernadero.cenit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

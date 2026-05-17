@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +24,11 @@ public class RegistroActividadService {
 
     public RegistroActividad save(RegistroActividad registroActividad) {
         return registroActividadRepository.save(registroActividad);
+    }
+
+    public RegistroActividad update(Long id, RegistroActividad updated) {
+        updated.setId(id);
+        return registroActividadRepository.save(updated);
     }
 
     public void deleteById(Long id) {

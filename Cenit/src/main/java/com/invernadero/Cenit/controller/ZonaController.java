@@ -5,7 +5,8 @@ import com.invernadero.cenit.service.ZonaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/api/zonas")
@@ -16,8 +17,8 @@ public class ZonaController {
     private final ZonaService zonaService;
 
     @GetMapping
-    public ResponseEntity<List<Zona>> findAll() {
-        return ResponseEntity.ok(zonaService.findAll());
+    public ResponseEntity<Page<Zona>> findAll(Pageable pageable) {
+        return ResponseEntity.ok(zonaService.findAll(pageable));
     }
 
     @GetMapping("/{id}")

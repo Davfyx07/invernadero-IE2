@@ -32,7 +32,10 @@ public class InsumoService {
     }
 
     public void deleteById(Long id) {
-        insumoRepository.deleteById(id);
+        insumoRepository.findById(id).ifPresent(e -> {
+            e.setActivo(false);
+            insumoRepository.save(e);
+        });
     }
 
 }

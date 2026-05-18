@@ -19,5 +19,8 @@ public class Zona {
     private Integer capacidad;
     @Column(name = "invernadero_id", nullable = false)
     private Long invernadero_id;
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean activo = true;
 
 }

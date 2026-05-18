@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 @RestController
-@RequestMapping("/api/registro-actividads")
+@RequestMapping("/api/registroactividads")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173")
 public class RegistroActividadController {

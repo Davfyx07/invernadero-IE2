@@ -4,6 +4,7 @@ import com.invernadero.cenit.entity.Invernadero;
 import com.invernadero.cenit.service.InvernaderoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,16 +30,19 @@ public class InvernaderoController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Invernadero> create(@RequestBody Invernadero invernadero) {
         return ResponseEntity.ok(invernaderoService.save(invernadero));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Invernadero> update(@PathVariable Long id, @RequestBody Invernadero invernadero) {
         return ResponseEntity.ok(invernaderoService.update(id, invernadero));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         invernaderoService.deleteById(id);
         return ResponseEntity.noContent().build();

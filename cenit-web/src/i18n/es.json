@@ -1,0 +1,115 @@
+{
+  "app": {
+    "name": "Cenit",
+    "subtitle": "Gestión de Invernadero"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "invernaderos": "Invernaderos",
+    "zonas": "Zonas",
+    "cultivos": "Cultivos",
+    "insumos": "Insumos",
+    "registros": "Registros",
+    "sensores": "Sensores",
+    "erd": "ERD",
+    "usuarios": "Usuarios",
+    "unidadesMedida": "Unidades de Medida",
+    "tiposInsumo": "Tipos de Insumo",
+    "estadosCultivo": "Estados de Cultivo",
+    "parametrizacion": "Parametrización",
+    "logout": "Cerrar sesión",
+    "collapse": "Colapsar"
+  },
+  "login": {
+    "title": "Bienvenido de nuevo",
+    "subtitle": "Ingresa tus credenciales para acceder al panel.",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "tu@empresa.com",
+    "password": "Contraseña",
+    "passwordPlaceholder": "••••••••",
+    "rememberMe": "Recordarme",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "submit": "Iniciar sesión",
+    "or": "o",
+    "google": "Iniciar sesión con Google",
+    "noAccount": "¿No tienes cuenta?",
+    "register": "Regístrate",
+    "demo": "Saltar al Dashboard (demo)"
+  },
+  "register": {
+    "title": "Crear cuenta",
+    "subtitle": "Regístrate para comenzar a gestionar tus invernaderos.",
+    "nombre": "Nombre",
+    "apellido": "Apellido",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "telefono": "Teléfono (opcional)",
+    "terms": "Acepto los Términos de servicio y la Política de privacidad",
+    "submit": "Crear cuenta",
+    "or": "o",
+    "google": "Registrarse con Google",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "login": "Inicia sesión"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Resumen general del sistema",
+    "kpi": {
+      "invernaderos": "Total de Invernaderos",
+      "zonas": "Zonas Activas",
+      "alertas": "Cultivos en Alerta",
+      "criticos": "Insumos Críticos"
+    },
+    "charts": {
+      "estados": "Cultivos por estado",
+      "estadosDesc": "Distribución actual por estado",
+      "condiciones": "Condiciones por zona",
+      "condicionesDesc": "Humedad relativa y temperatura promedio"
+    },
+    "activities": {
+      "title": "Últimas actividades",
+      "subtitle": "Registros recientes de operaciones en campo",
+      "search": "Buscar actividad...",
+      "filter": "Todos",
+      "columns": {
+        "actividad": "Actividad",
+        "tipo": "Tipo",
+        "zona": "Zona",
+        "responsable": "Responsable",
+        "fecha": "Fecha",
+        "estado": "Estado"
+      }
+    }
+  },
+  "crud": {
+    "new": "+ Nuevo",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "back": "← Volver",
+    "search": "Buscar...",
+    "required": "Este campo es obligatorio",
+    "created": "Creado correctamente",
+    "updated": "Actualizado correctamente",
+    "deleted": "Eliminado correctamente",
+    "errorLoad": "Error al cargar datos",
+    "errorSave": "Error al guardar",
+    "errorDelete": "Error al eliminar",
+    "confirmDelete": "¿Eliminar este registro?",
+    "noData": "No hay datos disponibles"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "create": "Crear",
+    "confirmDelete": "¿Eliminar este registro?",
+    "noResults": "No se encontraron resultados",
+    "error": "Ha ocurrido un error",
+    "success": "Operación exitosa"
+  }
+}

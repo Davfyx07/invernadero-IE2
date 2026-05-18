@@ -27,12 +27,20 @@ public class InvernaderoService {
     }
 
     public Invernadero update(Long id, Invernadero updated) {
-        updated.setId(id);
-        return invernaderoRepository.save(updated);
+        Invernadero existing = invernaderoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Invernadero no encontrado"));
+        existing.setNombre(updated.getNombre());
+        existing.setUbicacion(updated.getUbicacion());
+        existing.setDescripcion(updated.getDescripcion());
+        existing.setActivo(updated.isActivo());
+        return invernaderoRepository.save(existing);
     }
 
     public void deleteById(Long id) {
-        invernaderoRepository.deleteById(id);
+        invernaderoRepository.findById(id).ifPresent(e -> {
+            e.setActivo(false);
+            invernaderoRepository.save(e);
+        });
     }
 
 }

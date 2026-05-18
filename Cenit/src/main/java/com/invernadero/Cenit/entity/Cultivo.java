@@ -3,7 +3,6 @@ package com.invernadero.cenit.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.*;
-import com.invernadero.cenit.enums.Estadocultivo;
 
 @Entity
 @Table(name = "cultivos")
@@ -23,12 +22,14 @@ public class Cultivo {
     @Column(nullable = false)
     private LocalDate fechaSiembra;
     private LocalDate fechaCosecha;
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Estadocultivo estado;
+    @Column(length = 50, nullable = false)
+    private String estado;
     @Column(name = "zona_id", nullable = false)
     private Long zona_id;
     @Column(name = "usuario_id", nullable = false)
     private Long usuario_id;
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean activo = true;
 
 }

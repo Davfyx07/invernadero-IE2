@@ -4,6 +4,7 @@ import com.invernadero.cenit.entity.Insumo;
 import com.invernadero.cenit.service.InsumoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,16 +30,19 @@ public class InsumoController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Insumo> create(@RequestBody Insumo insumo) {
         return ResponseEntity.ok(insumoService.save(insumo));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Insumo> update(@PathVariable Long id, @RequestBody Insumo insumo) {
         return ResponseEntity.ok(insumoService.update(id, insumo));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         insumoService.deleteById(id);
         return ResponseEntity.noContent().build();

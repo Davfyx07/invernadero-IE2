@@ -1,0 +1,115 @@
+{
+  "app": {
+    "name": "Cenit",
+    "subtitle": "Gestione Serra"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "invernaderos": "Serre",
+    "zonas": "Zone",
+    "cultivos": "Colture",
+    "insumos": "Forniture",
+    "registros": "Registri",
+    "sensores": "Sensori",
+    "erd": "ERD",
+    "usuarios": "Utenti",
+    "unidadesMedida": "Unità di Misura",
+    "tiposInsumo": "Tipi di Fornitura",
+    "estadosCultivo": "Stati del Raccolto",
+    "parametrizacion": "Impostazioni",
+    "logout": "Esci",
+    "collapse": "Comprimi"
+  },
+  "login": {
+    "title": "Bentornato",
+    "subtitle": "Inserisci le tue credenziali per accedere al pannello.",
+    "email": "Indirizzo email",
+    "emailPlaceholder": "tu@azienda.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "rememberMe": "Ricordami",
+    "forgotPassword": "Password dimenticata?",
+    "submit": "Accedi",
+    "or": "o",
+    "google": "Accedi con Google",
+    "noAccount": "Non hai un account?",
+    "register": "Registrati",
+    "demo": "Vai al Dashboard (demo)"
+  },
+  "register": {
+    "title": "Crea account",
+    "subtitle": "Registrati per iniziare a gestire le tue serre.",
+    "nombre": "Nome",
+    "apellido": "Cognome",
+    "email": "Indirizzo email",
+    "password": "Password",
+    "confirmPassword": "Conferma password",
+    "telefono": "Telefono (opzionale)",
+    "terms": "Accetto i Termini di servizio e l'Informativa sulla privacy",
+    "submit": "Crea account",
+    "or": "o",
+    "google": "Registrati con Google",
+    "hasAccount": "Hai già un account?",
+    "login": "Accedi"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Panoramica del sistema",
+    "kpi": {
+      "invernaderos": "Totale Serre",
+      "zonas": "Zone Attive",
+      "alertas": "Colture in Allerta",
+      "criticos": "Forniture Critiche"
+    },
+    "charts": {
+      "estados": "Colture per stato",
+      "estadosDesc": "Distribuzione attuale per stato",
+      "condiciones": "Condizioni per zona",
+      "condicionesDesc": "Umidità relativa e temperatura media"
+    },
+    "activities": {
+      "title": "Attività recenti",
+      "subtitle": "Registri recenti delle operazioni in campo",
+      "search": "Cerca attività...",
+      "filter": "Tutti",
+      "columns": {
+        "actividad": "Attività",
+        "tipo": "Tipo",
+        "zona": "Zona",
+        "responsable": "Responsabile",
+        "fecha": "Data",
+        "estado": "Stato"
+      }
+    }
+  },
+  "crud": {
+    "new": "+ Nuovo",
+    "edit": "Modifica",
+    "delete": "Elimina",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "back": "← Indietro",
+    "search": "Cerca...",
+    "required": "Questo campo è obbligatorio",
+    "created": "Creato con successo",
+    "updated": "Aggiornato con successo",
+    "deleted": "Eliminato con successo",
+    "errorLoad": "Errore di caricamento",
+    "errorSave": "Errore di salvataggio",
+    "errorDelete": "Errore di eliminazione",
+    "confirmDelete": "Eliminare questo record?",
+    "noData": "Nessun dato disponibile"
+  },
+  "common": {
+    "loading": "Caricamento...",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "edit": "Modifica",
+    "delete": "Elimina",
+    "create": "Crea",
+    "confirmDelete": "Eliminare questo record?",
+    "noResults": "Nessun risultato trovato",
+    "error": "Si è verificato un errore",
+    "success": "Operazione riuscita"
+  }
+}

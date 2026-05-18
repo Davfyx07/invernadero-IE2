@@ -1,0 +1,115 @@
+{
+  "app": {
+    "name": "Cenit",
+    "subtitle": "Greenhouse Management"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "invernaderos": "Greenhouses",
+    "zonas": "Zones",
+    "cultivos": "Crops",
+    "insumos": "Supplies",
+    "registros": "Records",
+    "sensores": "Sensors",
+    "erd": "ERD",
+    "usuarios": "Users",
+    "unidadesMedida": "Units of Measure",
+    "tiposInsumo": "Supply Types",
+    "estadosCultivo": "Crop States",
+    "parametrizacion": "Settings",
+    "logout": "Sign out",
+    "collapse": "Collapse"
+  },
+  "login": {
+    "title": "Welcome back",
+    "subtitle": "Enter your credentials to access the panel.",
+    "email": "Email address",
+    "emailPlaceholder": "you@company.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "submit": "Sign in",
+    "or": "or",
+    "google": "Sign in with Google",
+    "noAccount": "Don't have an account?",
+    "register": "Register",
+    "demo": "Skip to Dashboard (demo)"
+  },
+  "register": {
+    "title": "Create account",
+    "subtitle": "Register to start managing your greenhouses.",
+    "nombre": "First name",
+    "apellido": "Last name",
+    "email": "Email address",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "telefono": "Phone (optional)",
+    "terms": "I agree to the Terms of Service and Privacy Policy",
+    "submit": "Create account",
+    "or": "or",
+    "google": "Register with Google",
+    "hasAccount": "Already have an account?",
+    "login": "Sign in"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "System overview",
+    "kpi": {
+      "invernaderos": "Total Greenhouses",
+      "zonas": "Active Zones",
+      "alertas": "Crops in Alert",
+      "criticos": "Critical Supplies"
+    },
+    "charts": {
+      "estados": "Crops by state",
+      "estadosDesc": "Current distribution by state",
+      "condiciones": "Conditions by zone",
+      "condicionesDesc": "Relative humidity and average temperature"
+    },
+    "activities": {
+      "title": "Recent activities",
+      "subtitle": "Recent field operation records",
+      "search": "Search activity...",
+      "filter": "All",
+      "columns": {
+        "actividad": "Activity",
+        "tipo": "Type",
+        "zona": "Zone",
+        "responsable": "Responsible",
+        "fecha": "Date",
+        "estado": "Status"
+      }
+    }
+  },
+  "crud": {
+    "new": "+ New",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "← Back",
+    "search": "Search...",
+    "required": "This field is required",
+    "created": "Created successfully",
+    "updated": "Updated successfully",
+    "deleted": "Deleted successfully",
+    "errorLoad": "Error loading data",
+    "errorSave": "Error saving",
+    "errorDelete": "Error deleting",
+    "confirmDelete": "Delete this record?",
+    "noData": "No data available"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "create": "Create",
+    "confirmDelete": "Delete this record?",
+    "noResults": "No results found",
+    "error": "An error occurred",
+    "success": "Operation successful"
+  }
+}

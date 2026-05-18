@@ -32,7 +32,10 @@ public class ZonaService {
     }
 
     public void deleteById(Long id) {
-        zonaRepository.deleteById(id);
+        zonaRepository.findById(id).ifPresent(e -> {
+            e.setActivo(false);
+            zonaRepository.save(e);
+        });
     }
 
 }

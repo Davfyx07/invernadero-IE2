@@ -1,71 +1,36 @@
-// src/pages/Insumo/InsumoList.jsx
-// Generado desde frontend.json — no editar manualmente
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getAllInsumos, deleteInsumo } from "../../api/InsumoApi";
+import CrudList from "../../components/CrudList";
+import { getAllInsumos, getInsumoById, createInsumo, updateInsumo, deleteInsumo } from "../../api/InsumoApi";
+
+const TIPO_COLORS = {
+  FERTILIZANTE: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+  PESTICIDA: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
+  AGUA: "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300",
+  OTRO: "bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-300",
+};
+
+const COLUMNS = [
+  { key: "nombre", header: "Nombre", type: "text" },
+  { key: "tipo", header: "Tipo", type: "enum", enumColors: TIPO_COLORS },
+  { key: "unidadMedida", header: "Unidad", type: "text" },
+  { key: "stockActual", header: "Stock", type: "number" },
+];
+
+const API = { getAll: getAllInsumos, getById: getInsumoById, create: createInsumo, update: updateInsumo, delete: deleteInsumo };
+
+const TIPO_OPTIONS = [
+  { value: "FERTILIZANTE", label: "Fertilizante" },
+  { value: "PESTICIDA", label: "Pesticida" },
+  { value: "AGUA", label: "Agua" },
+  { value: "OTRO", label: "Otro" },
+];
+
+const FIELDS = [
+  { name: "nombre", label: "Nombre", type: "text", required: true },
+  { name: "tipo", label: "Tipo", type: "parametro", paramTipo: "TIPO_INSUMO", required: true },
+  { name: "unidadMedida", label: "Unidad de medida", type: "parametro", paramTipo: "UNIDAD_MEDIDA", required: true },
+  { name: "stockActual", label: "Stock actual", type: "number", required: true },
+];
 
 export default function InsumoList() {
-  const [items, setItems]   = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-
-  const load = async () => {
-    try {
-      const res = await getAllInsumos();
-      // Soporta respuesta paginada o lista simple
-      setItems(res.data?.content ?? res.data);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => { load(); }, []);
-
-  const handleDelete = async (id) => {
-    if (!confirm("¿Eliminar este registro?")) return;
-    await deleteInsumo(id);
-    load();
-  };
-
-  if (loading) return <p>Cargando...</p>;
-
-  return (
-    <div style={{ padding: "1rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <h2>Insumo</h2>
-        <button onClick={() => navigate("nuevo")} style={btnStyle}>+ Nuevo</button>
-      </div>
-
-      <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "1rem" }}>
-        <thead style={{ background: "#2e7d32", color: "#fff" }}>
-          <tr>
-          <th>nombre</th>
-          <th>tipo</th>
-          <th>unidadMedida</th>
-          <th>stockActual</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.id} style={{ borderBottom: "1px solid #ddd" }}>
-          <td>{item.nombre}</td>
-          <td>{item.tipo}</td>
-          <td>{item.unidadMedida}</td>
-          <td>{item.stockActual}</td>
-              <td>
-                <button onClick={() => navigate(`${item.id}/editar`)} style={btnSmall}>Editar</button>
-                <button onClick={() => handleDelete(item.id)} style={{ ...btnSmall, background: "#c62828" }}>Eliminar</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+  return <CrudList entity="Insumos" columns={COLUMNS} api={API} formFields={FIELDS} />;
 }
-
-const btnStyle = { background: "#2e7d32", color: "#fff", border: "none", padding: "8px 16px", borderRadius: "4px", cursor: "pointer" };
-const btnSmall = { ...btnStyle, padding: "4px 10px", marginRight: "4px", fontSize: "12px" };

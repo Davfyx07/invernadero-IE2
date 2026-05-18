@@ -15,15 +15,15 @@ const COLORS = {
   grid:         "#161b22",
   entityBg:     "#161b22",
   entityBorder: "#30363d",
-  headerBg:     "#1f6feb",
-  headerAlt:    "#388bfd",
+  headerBg:     "#059669",
+  headerAlt:    "#10b981",
   headerText:   "#ffffff",
   pkText:       "#ffa657",
   fkText:       "#79c0ff",
   fieldText:    "#c9d1d9",
   typeText:     "#8b949e",
-  relation:     "#388bfd",
-  relationGlow: "#1f6feb",
+  relation:     "#10b981",
+  relationGlow: "#059669",
   selected:     "#f78166",
   shadow:       "rgba(31, 111, 235, 0.3)",
 };
@@ -349,6 +349,23 @@ export default function ERDViewer() {
         <div style={styles.sidebarHeader}>
           <span style={styles.sidebarTitle}>🌿 ERD Viewer</span>
           <span style={styles.sidebarSub}>{model.project} v{model.version}</span>
+          <a
+            href="/"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "4px",
+              marginTop: "8px",
+              padding: "6px 10px",
+              background: "rgba(255,255,255,0.08)",
+              borderRadius: "8px",
+              color: "#8b949e",
+              fontSize: "11px",
+              textDecoration: "none",
+            }}
+          >
+            ← Volver al Dashboard
+          </a>
         </div>
 
         <div style={styles.sidebarSection}>

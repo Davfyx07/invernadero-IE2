@@ -4,6 +4,7 @@ import com.invernadero.cenit.entity.Cultivo;
 import com.invernadero.cenit.service.CultivoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,16 +30,19 @@ public class CultivoController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Cultivo> create(@RequestBody Cultivo cultivo) {
         return ResponseEntity.ok(cultivoService.save(cultivo));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Cultivo> update(@PathVariable Long id, @RequestBody Cultivo cultivo) {
         return ResponseEntity.ok(cultivoService.update(id, cultivo));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         cultivoService.deleteById(id);
         return ResponseEntity.noContent().build();

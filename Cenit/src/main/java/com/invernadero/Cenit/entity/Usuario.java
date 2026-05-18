@@ -25,9 +25,23 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Rol rol;
+    @Builder.Default
     @Column(nullable = false)
-    private boolean activo;
+    private boolean activo = true;
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean emailVerified = false;
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean firstLogin = true;
     @Column(nullable = false)
     private LocalDateTime creadoEn;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.creadoEn == null) {
+            this.creadoEn = LocalDateTime.now();
+        }
+    }
 
 }

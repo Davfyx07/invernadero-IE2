@@ -1,38 +1,61 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import api from "../api/axiosConfig";
 
 export function useAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    let cancelled = false;
+  const getToken = () => localStorage.getItem("cenit_token");
+  const setToken = (t) => localStorage.setItem("cenit_token", t);
+  const clearToken = () => localStorage.removeItem("cenit_token");
 
-    const check = async () => {
-      try {
-        // Intenta un endpoint protegido como ping de sesión
-        const res = await api.get("/usuarios?page=0&size=1");
-        if (!cancelled) setUser(res.data?.content?.[0] ?? true);
-      } catch (err) {
-        if (cancelled) return;
-        if (err.response?.status === 401 || err.response?.status === 403) {
-          setUser(null);
-        } else {
-          // Backend no disponible → asume autenticado para no bloquear dev
-          setUser(true);
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    };
-
-    check();
-    return () => { cancelled = true; };
+  const fetchMe = useCallback(async () => {
+    const token = getToken();
+    if (!token) {
+      setLoading(false);
+      setUser(null);
+      return;
+    }
+    try {
+      const res = await api.get("/auth/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUser(res.data);
+    } catch {
+      clearToken();
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  const logout = () => {
-    window.location.href = "http://localhost:8080/logout";
+  useEffect(() => {
+    fetchMe();
+  }, [fetchMe]);
+
+  const login = async (email, password) => {
+    const res = await api.post("/auth/login", { email, password });
+    setToken(res.data.token);
+    await fetchMe();
+    return res.data;
   };
 
-  return { user, loading, logout };
+  const register = async (data) => {
+    const res = await api.post("/auth/register", data);
+    // No hacemos login automático — el usuario debe verificar email primero
+    return res.data;
+  };
+
+  const logout = () => {
+    clearToken();
+    setUser(null);
+    window.location.href = "/login";
+  };
+
+  const oauthLogin = (token) => {
+    setToken(token);
+    window.location.href = "/";
+  };
+
+  return { user, loading, login, register, logout, oauthLogin, getToken, refresh: fetchMe };
 }

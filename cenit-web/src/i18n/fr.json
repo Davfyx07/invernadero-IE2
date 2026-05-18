@@ -1,0 +1,115 @@
+{
+  "app": {
+    "name": "Cenit",
+    "subtitle": "Gestion de Serre"
+  },
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "invernaderos": "Serres",
+    "zonas": "Zones",
+    "cultivos": "Cultures",
+    "insumos": "Fournitures",
+    "registros": "Enregistrements",
+    "sensores": "Capteurs",
+    "erd": "ERD",
+    "usuarios": "Utilisateurs",
+    "unidadesMedida": "Unités de Mesure",
+    "tiposInsumo": "Types de Fourniture",
+    "estadosCultivo": "États de Culture",
+    "parametrizacion": "Paramétrage",
+    "logout": "Déconnexion",
+    "collapse": "Réduire"
+  },
+  "login": {
+    "title": "Bon retour",
+    "subtitle": "Entrez vos identifiants pour accéder au panneau.",
+    "email": "Adresse e-mail",
+    "emailPlaceholder": "vous@entreprise.com",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "••••••••",
+    "rememberMe": "Se souvenir de moi",
+    "forgotPassword": "Mot de passe oublié ?",
+    "submit": "Se connecter",
+    "or": "ou",
+    "google": "Se connecter avec Google",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "register": "Inscrivez-vous",
+    "demo": "Passer au tableau de bord (démo)"
+  },
+  "register": {
+    "title": "Créer un compte",
+    "subtitle": "Inscrivez-vous pour commencer à gérer vos serres.",
+    "nombre": "Prénom",
+    "apellido": "Nom",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "telefono": "Téléphone (optionnel)",
+    "terms": "J'accepte les Conditions d'utilisation et la Politique de confidentialité",
+    "submit": "Créer un compte",
+    "or": "ou",
+    "google": "S'inscrire avec Google",
+    "hasAccount": "Vous avez déjà un compte ?",
+    "login": "Se connecter"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "subtitle": "Vue d'ensemble du système",
+    "kpi": {
+      "invernaderos": "Total Serres",
+      "zonas": "Zones Actives",
+      "alertas": "Cultures en Alerte",
+      "criticos": "Fournitures Critiques"
+    },
+    "charts": {
+      "estados": "Cultures par état",
+      "estadosDesc": "Distribution actuelle par état",
+      "condiciones": "Conditions par zone",
+      "condicionesDesc": "Humidité relative et température moyenne"
+    },
+    "activities": {
+      "title": "Activités récentes",
+      "subtitle": "Enregistrements récents des opérations sur le terrain",
+      "search": "Rechercher une activité...",
+      "filter": "Tous",
+      "columns": {
+        "actividad": "Activité",
+        "tipo": "Type",
+        "zona": "Zone",
+        "responsable": "Responsable",
+        "fecha": "Date",
+        "estado": "État"
+      }
+    }
+  },
+  "crud": {
+    "new": "+ Nouveau",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "back": "← Retour",
+    "search": "Rechercher...",
+    "required": "Ce champ est obligatoire",
+    "created": "Créé avec succès",
+    "updated": "Mis à jour avec succès",
+    "deleted": "Supprimé avec succès",
+    "errorLoad": "Erreur de chargement",
+    "errorSave": "Erreur d'enregistrement",
+    "errorDelete": "Erreur de suppression",
+    "confirmDelete": "Supprimer cet enregistrement ?",
+    "noData": "Aucune donnée disponible"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "create": "Créer",
+    "confirmDelete": "Supprimer cet enregistrement ?",
+    "noResults": "Aucun résultat trouvé",
+    "error": "Une erreur s'est produite",
+    "success": "Opération réussie"
+  }
+}

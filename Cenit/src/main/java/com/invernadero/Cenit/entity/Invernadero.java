@@ -22,5 +22,15 @@ public class Invernadero {
     private String descripcion;
     @Column(nullable = false)
     private LocalDateTime creadoEn;
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean activo = true;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.creadoEn == null) {
+            this.creadoEn = LocalDateTime.now();
+        }
+    }
 
 }

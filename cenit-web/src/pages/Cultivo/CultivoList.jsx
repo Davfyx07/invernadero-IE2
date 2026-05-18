@@ -1,71 +1,41 @@
-// src/pages/Cultivo/CultivoList.jsx
-// Generado desde frontend.json — no editar manualmente
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getAllCultivos, deleteCultivo } from "../../api/CultivoApi";
+import CrudList from "../../components/CrudList";
+import { getAllCultivos, getCultivoById, createCultivo, updateCultivo, deleteCultivo } from "../../api/CultivoApi";
+import { FK_RELATIONS } from "../../api/entityRegistry";
+
+const ESTADO_COLORS = {
+  ACTIVO: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
+  COSECHADO: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+  PERDIDO: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
+};
+
+const COLUMNS = [
+  { key: "especie", header: "Especie", type: "text" },
+  { key: "variedad", header: "Variedad", type: "text" },
+  { key: "estado", header: "Estado", type: "enum", enumColors: ESTADO_COLORS },
+  { key: "fechaSiembra", header: "Siembra", type: "date" },
+];
+
+const API = { getAll: getAllCultivos, getById: getCultivoById, create: createCultivo, update: updateCultivo, delete: deleteCultivo };
+
+const ESTADO_OPTIONS = [
+  { value: "ACTIVO", label: "Activo" },
+  { value: "COSECHADO", label: "Cosechado" },
+  { value: "PERDIDO", label: "Perdido" },
+];
+
+const FIELDS = [
+  { name: "especie", label: "Especie", type: "text", required: true },
+  { name: "variedad", label: "Variedad", type: "text" },
+  { name: "estado", label: "Estado", type: "parametro", paramTipo: "ESTADO_CULTIVO", required: true },
+  { name: "fechaSiembra", label: "Fecha de siembra", type: "date", required: true },
+  { name: "fechaCosecha", label: "Fecha de cosecha", type: "date" },
+  { name: "zona_id", label: "Zona", type: "fk", required: true },
+  { name: "usuario_id", label: "Responsable", type: "fk", required: true },
+];
+
+const FK_MAP = { zona_id: "zona", usuario_id: "usuario" };
+const FK_ENTITIES = Object.values(FK_RELATIONS.Cultivo);
 
 export default function CultivoList() {
-  const [items, setItems]   = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-
-  const load = async () => {
-    try {
-      const res = await getAllCultivos();
-      // Soporta respuesta paginada o lista simple
-      setItems(res.data?.content ?? res.data);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => { load(); }, []);
-
-  const handleDelete = async (id) => {
-    if (!confirm("¿Eliminar este registro?")) return;
-    await deleteCultivo(id);
-    load();
-  };
-
-  if (loading) return <p>Cargando...</p>;
-
-  return (
-    <div style={{ padding: "1rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <h2>Cultivo</h2>
-        <button onClick={() => navigate("nuevo")} style={btnStyle}>+ Nuevo</button>
-      </div>
-
-      <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "1rem" }}>
-        <thead style={{ background: "#2e7d32", color: "#fff" }}>
-          <tr>
-          <th>especie</th>
-          <th>variedad</th>
-          <th>estado</th>
-          <th>fechaSiembra</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.id} style={{ borderBottom: "1px solid #ddd" }}>
-          <td>{item.especie}</td>
-          <td>{item.variedad}</td>
-          <td>{item.estado}</td>
-          <td>{item.fechaSiembra}</td>
-              <td>
-                <button onClick={() => navigate(`${item.id}/editar`)} style={btnSmall}>Editar</button>
-                <button onClick={() => handleDelete(item.id)} style={{ ...btnSmall, background: "#c62828" }}>Eliminar</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+  return <CrudList entity="Cultivos" columns={COLUMNS} api={API} formFields={FIELDS} fkMap={FK_MAP} fkEntities={FK_ENTITIES} />;
 }
-
-const btnStyle = { background: "#2e7d32", color: "#fff", border: "none", padding: "8px 16px", borderRadius: "4px", cursor: "pointer" };
-const btnSmall = { ...btnStyle, padding: "4px 10px", marginRight: "4px", fontSize: "12px" };

@@ -3,8 +3,6 @@ package com.invernadero.cenit.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.*;
-import com.invernadero.cenit.enums.Tipoactividad;
-
 @Entity
 @Table(name = "registros_actividad")
 @Data
@@ -16,9 +14,8 @@ public class RegistroActividad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Tipoactividad tipo;
+    private String tipo;
     @Column(nullable = false)
     private LocalDateTime fecha;
     private Double cantidad;
@@ -29,5 +26,8 @@ public class RegistroActividad {
     private Long insumo_id;
     @Column(name = "usuario_id", nullable = false)
     private Long usuario_id;
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean activo = true;
 
 }

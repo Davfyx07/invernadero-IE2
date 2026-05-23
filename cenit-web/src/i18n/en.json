@@ -3,6 +3,7 @@
     "name": "Cenit",
     "subtitle": "Greenhouse Management"
   },
+  
   "nav": {
     "dashboard": "Dashboard",
     "invernaderos": "Greenhouses",

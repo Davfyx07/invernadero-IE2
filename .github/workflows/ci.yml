@@ -90,3 +90,14 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Validar Commits y Cambios con Taiga
+        run: python scripts/validar_taiga.py

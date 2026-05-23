@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import api from "../../api/axiosConfig";
 import { useToast } from "../../components/Toast";
+import { useI18n } from "../../hooks/useI18n";
 
 export default function VerifyEmail() {
   const navigate = useNavigate();
   const location = useLocation();
   const { show } = useToast();
+  const { t } = useI18n();
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -18,16 +20,16 @@ export default function VerifyEmail() {
     e.preventDefault();
     setError("");
     if (code.length !== 6) {
-      setError("Ingresa el código de 6 dígitos");
+      setError(t("verify.error.codeLength"));
       return;
     }
     setLoading(true);
     try {
       await api.post("/auth/verify-otp", { email, code });
-      show("Correo verificado correctamente", "success");
+      show(t("common.success"), "success");
       navigate("/login");
     } catch (err) {
-      setError(err.response?.data?.message || "Código incorrecto");
+      setError(err.response?.data?.message || t("verify.error.invalid"));
     } finally {
       setLoading(false);
     }
@@ -37,9 +39,9 @@ export default function VerifyEmail() {
     setResending(true);
     try {
       await api.post("/auth/resend-otp?email=" + encodeURIComponent(email));
-      show("Código reenviado", "success");
+      show(t("common.success"), "success");
     } catch {
-      show("Error al reenviar", "error");
+      show(t("common.error"), "error");
     } finally {
       setResending(false);
     }
@@ -55,9 +57,9 @@ export default function VerifyEmail() {
               <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-cenit-800 dark:text-white">Verifica tu correo</h2>
+          <h2 className="text-xl font-semibold text-cenit-800 dark:text-white">{t("verify.title")}</h2>
           <p className="text-sm text-cenit-500 dark:text-cenit-300 mt-1">
-            Enviamos un código de 6 dígitos a <span className="font-medium text-cenit-700 dark:text-cenit-200">{email}</span>
+            {t("verify.subtitle", email)}
           </p>
         </div>
 
@@ -70,7 +72,7 @@ export default function VerifyEmail() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-cenit-700 dark:text-cenit-200 mb-1.5">
-              Código de verificación
+              {t("verify.codeLabel")}
             </label>
             <input
               type="text"
@@ -78,7 +80,7 @@ export default function VerifyEmail() {
               maxLength={6}
               value={code}
               onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
-              placeholder="000000"
+              placeholder={t("verify.codePlaceholder")}
               className="w-full rounded-xl border border-cenit-200 dark:border-cenit-600 bg-cenit-50 dark:bg-cenit-900 px-4 py-2.5 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-cenit-800 dark:text-white placeholder:text-cenit-300 text-center tracking-[0.5em] font-mono"
               required
             />
@@ -88,7 +90,7 @@ export default function VerifyEmail() {
             disabled={loading}
             className="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-xl text-sm font-medium transition disabled:opacity-60"
           >
-            {loading ? "Verificando..." : "Verificar"}
+            {loading ? t("verify.verifying") : t("verify.verifyBtn")}
           </button>
         </form>
 
@@ -98,7 +100,7 @@ export default function VerifyEmail() {
             disabled={resending}
             className="text-sm text-emerald-700 dark:text-emerald-300 hover:underline disabled:opacity-60"
           >
-            {resending ? "Reenviando..." : "Reenviar código"}
+            {resending ? t("verify.resending") : t("verify.resendBtn")}
           </button>
         </div>
       </div>

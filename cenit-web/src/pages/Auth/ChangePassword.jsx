@@ -3,11 +3,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import api from "../../api/axiosConfig";
 import PasswordInput from "../../components/PasswordInput";
 import { useToast } from "../../components/Toast";
+import { useI18n } from "../../hooks/useI18n";
 
 export default function ChangePassword() {
   const navigate = useNavigate();
   const location = useLocation();
   const { show } = useToast();
+  const { t } = useI18n();
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -25,11 +27,11 @@ export default function ChangePassword() {
     setError("");
 
     if (newPassword.length < 6) {
-      setError("La contraseña debe tener al menos 6 caracteres");
+      setError(t("changePassword.error.minLength"));
       return;
     }
     if (newPassword !== confirmPassword) {
-      setError("Las contraseñas no coinciden");
+      setError(t("changePassword.error.match"));
       return;
     }
 
@@ -44,9 +46,9 @@ export default function ChangePassword() {
         });
       }
       setSuccess(true);
-      show("Contraseña actualizada correctamente", "success");
+      show(t("common.success"), "success");
     } catch (err) {
-      setError(err.response?.data?.message || "Error al cambiar la contraseña");
+      setError(err.response?.data?.message || t("common.error.generic"));
     } finally {
       setLoading(false);
     }
@@ -62,16 +64,16 @@ export default function ChangePassword() {
             </svg>
           </div>
           <h2 className="text-xl font-semibold text-cenit-800 dark:text-white mb-2">
-            {isRecovery ? "Contraseña restablecida" : "Contraseña actualizada"}
+            {t("changePassword.successTitle")}
           </h2>
           <p className="text-sm text-cenit-500 dark:text-cenit-300 mb-6">
-            Tu contraseña se ha cambiado correctamente. Ahora puedes iniciar sesión con tu nueva contraseña.
+            {t("changePassword.successMessage")}
           </p>
           <button
             onClick={() => navigate("/login")}
             className="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-xl text-sm font-medium transition"
           >
-            Iniciar sesión
+            {t("changePassword.loginBtn")}
           </button>
         </div>
       </div>
@@ -89,12 +91,12 @@ export default function ChangePassword() {
             </svg>
           </div>
           <h2 className="text-xl font-semibold text-cenit-800 dark:text-white">
-            {isFirstLogin ? "Cambia tu contraseña" : isRecovery ? "Nueva contraseña" : "Cambiar contraseña"}
+            {isFirstLogin ? t("changePassword.firstLoginTitle") : isRecovery ? t("changePassword.recoveryTitle") : t("changePassword.title")}
           </h2>
           <p className="text-sm text-cenit-500 dark:text-cenit-300 mt-1">
             {isFirstLogin
-              ? "Es obligatorio cambiar tu contraseña temporal antes de continuar."
-              : "Crea una contraseña segura para tu cuenta."}
+              ? t("changePassword.firstLoginSubtitle")
+              : t("changePassword.subtitle")}
           </p>
         </div>
 
@@ -107,7 +109,7 @@ export default function ChangePassword() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {!isRecovery && (
             <PasswordInput
-              label="Contraseña actual"
+              label={t("changePassword.currentPassword")}
               name="currentPassword"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
@@ -116,7 +118,7 @@ export default function ChangePassword() {
             />
           )}
           <PasswordInput
-            label="Nueva contraseña"
+            label={t("changePassword.newPassword")}
             name="newPassword"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
@@ -124,7 +126,7 @@ export default function ChangePassword() {
             required
           />
           <PasswordInput
-            label="Confirmar nueva contraseña"
+            label={t("changePassword.confirmPassword")}
             name="confirmPassword"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -136,7 +138,7 @@ export default function ChangePassword() {
             disabled={loading}
             className="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-xl text-sm font-medium transition disabled:opacity-60"
           >
-            {loading ? "Guardando..." : "Guardar contraseña"}
+            {loading ? t("changePassword.saving") : t("changePassword.saveBtn")}
           </button>
         </form>
       </div>

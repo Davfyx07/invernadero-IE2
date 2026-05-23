@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/axiosConfig";
 import { useToast } from "../../components/Toast";
+import { useI18n } from "../../hooks/useI18n";
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
   const { show } = useToast();
+  const { t } = useI18n();
   const [step, setStep] = useState("email"); // email | otp
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
@@ -18,10 +20,10 @@ export default function ForgotPassword() {
     setLoading(true);
     try {
       await api.post("/auth/forgot-password", { email });
-      show("Código enviado a tu correo", "success");
+      show(t("common.success"), "success");
       setStep("otp");
     } catch (err) {
-      setError(err.response?.data?.message || "Correo no registrado");
+      setError(err.response?.data?.message || t("common.error.generic"));
     } finally {
       setLoading(false);
     }
@@ -31,12 +33,9 @@ export default function ForgotPassword() {
     e.preventDefault();
     setError("");
     if (code.length !== 6) {
-      setError("Ingresa el código de 6 dígitos");
+      setError(t("verify.error.codeLength"));
       return;
     }
-    // Verificamos OTP llamando a verify-otp con tipo PASSWORD_RECOVERY
-    // Pero el backend no tiene un endpoint específico para esto.
-    // Mejor: pasamos directo a cambiar contraseña y el backend valida allí
     navigate("/change-password", { state: { recovery: true, email, code } });
   };
 
@@ -51,12 +50,12 @@ export default function ForgotPassword() {
             </svg>
           </div>
           <h2 className="text-xl font-semibold text-cenit-800 dark:text-white">
-            {step === "email" ? "Recuperar contraseña" : "Verificar código"}
+            {step === "email" ? t("forgot.title") : t("forgot.title")}
           </h2>
           <p className="text-sm text-cenit-500 dark:text-cenit-300 mt-1">
             {step === "email"
-              ? "Ingresa tu correo y te enviaremos un código de recuperación."
-              : `Ingresa el código de 6 dígitos enviado a ${email}`}
+              ? t("forgot.subtitle")
+              : t("forgot.verifySubtitle", email)}
           </p>
         </div>
 
@@ -70,13 +69,13 @@ export default function ForgotPassword() {
           <form onSubmit={handleSendOtp} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-cenit-700 dark:text-cenit-200 mb-1.5">
-                Correo electrónico
+                {t("login.email")}
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="tu@empresa.com"
+                placeholder={t("login.emailPlaceholder")}
                 className="w-full rounded-xl border border-cenit-200 dark:border-cenit-600 bg-cenit-50 dark:bg-cenit-900 px-4 py-2.5 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-cenit-800 dark:text-white placeholder:text-cenit-300"
                 required
               />
@@ -86,21 +85,21 @@ export default function ForgotPassword() {
               disabled={loading}
               className="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-xl text-sm font-medium transition disabled:opacity-60"
             >
-              {loading ? "Enviando..." : "Enviar código"}
+              {loading ? t("forgot.sending") : t("forgot.sendBtn")}
             </button>
             <button
               type="button"
               onClick={() => navigate("/login")}
               className="w-full text-sm text-cenit-500 dark:text-cenit-300 hover:text-cenit-700 dark:hover:text-cenit-200 transition"
             >
-              Volver al inicio de sesión
+              {t("forgot.backToLogin")}
             </button>
           </form>
         ) : (
           <form onSubmit={handleVerifyOtp} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-cenit-700 dark:text-cenit-200 mb-1.5">
-                Código de recuperación
+                {t("verify.codeLabel")}
               </label>
               <input
                 type="text"
@@ -108,7 +107,7 @@ export default function ForgotPassword() {
                 maxLength={6}
                 value={code}
                 onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
-                placeholder="000000"
+                placeholder={t("verify.codePlaceholder")}
                 className="w-full rounded-xl border border-cenit-200 dark:border-cenit-600 bg-cenit-50 dark:bg-cenit-900 px-4 py-2.5 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-cenit-800 dark:text-white placeholder:text-cenit-300 text-center tracking-[0.5em] font-mono"
                 required
               />
@@ -118,14 +117,14 @@ export default function ForgotPassword() {
               disabled={loading}
               className="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-xl text-sm font-medium transition disabled:opacity-60"
             >
-              Continuar
+              {t("forgot.continueBtn")}
             </button>
             <button
               type="button"
               onClick={() => setStep("email")}
               className="w-full text-sm text-cenit-500 dark:text-cenit-300 hover:text-cenit-700 dark:hover:text-cenit-200 transition"
             >
-              Usar otro correo
+              {t("forgot.useOtherEmail")}
             </button>
           </form>
         )}

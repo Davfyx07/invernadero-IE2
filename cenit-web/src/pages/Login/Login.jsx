@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { useTheme } from "../../context/ThemeContext";
+import { useI18n } from "../../hooks/useI18n";
+import { useApiError } from "../../hooks/useApiError";
 import PasswordInput from "../../components/PasswordInput";
+import LanguageSelector from "../../components/LanguageSelector";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -11,6 +14,8 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const { login, oauthLogin } = useAuth();
   const { theme } = useTheme();
+  const { t } = useI18n();
+  const { handleError } = useApiError();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -37,7 +42,8 @@ export default function Login() {
       }
       window.location.href = "/";
     } catch (err) {
-      setError(err.response?.data?.message || "Credenciales inválidas");
+      const msg = handleError(err, { setFormError: setError, fallbackKey: "login.error.credentials" });
+      if (!msg) setError(t("login.error.credentials"));
     } finally {
       setLoading(false);
     }
@@ -49,7 +55,12 @@ export default function Login() {
 
   return (
     <div className={`min-h-screen flex items-center justify-center p-6 ${theme === "dark" ? "bg-cenit-900" : "bg-cenit-50"}`}>
-      <div className="w-full max-w-5xl grid lg:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl bg-white dark:bg-cenit-800 border border-cenit-100 dark:border-cenit-700">
+      <div className="w-full max-w-5xl grid lg:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl bg-white dark:bg-cenit-800 border border-cenit-100 dark:border-cenit-700 relative">
+        {/* Language selector */}
+        <div className="absolute top-4 right-4 z-10">
+          <LanguageSelector />
+        </div>
+
         {/* Left brand */}
         <div className="relative hidden lg:flex flex-col justify-between p-10 bg-gradient-to-br from-emerald-700 to-emerald-900 text-white overflow-hidden">
           <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 400 400" fill="none">
@@ -73,7 +84,7 @@ export default function Login() {
               <h1 className="text-2xl font-semibold tracking-tight">Cenit</h1>
             </div>
             <p className="text-emerald-100 text-lg leading-relaxed max-w-sm">
-              Gestión inteligente de invernaderos. Controla cultivos, zonas e insumos desde un solo lugar.
+              {t("app.subtitle")}
             </p>
           </div>
           <div className="relative z-10 text-sm text-emerald-200/80">
@@ -84,8 +95,8 @@ export default function Login() {
         {/* Right form */}
         <div className="p-8 md:p-12 flex flex-col justify-center">
           <div className="mb-8">
-            <h2 className="text-2xl font-semibold text-cenit-800 dark:text-white mb-2">Bienvenido de nuevo</h2>
-            <p className="text-cenit-400">Ingresa tus credenciales para acceder al panel.</p>
+            <h2 className="text-2xl font-semibold text-cenit-800 dark:text-white mb-2">{t("login.title")}</h2>
+            <p className="text-cenit-400">{t("login.subtitle")}</p>
           </div>
 
           {error && (
@@ -96,32 +107,32 @@ export default function Login() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-cenit-700 dark:text-cenit-200 mb-1.5">Correo electrónico</label>
+              <label className="block text-sm font-medium text-cenit-700 dark:text-cenit-200 mb-1.5">{t("login.email")}</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="tu@empresa.com"
+                placeholder={t("login.emailPlaceholder")}
                 required
                 className="w-full rounded-xl border border-cenit-200 dark:border-cenit-600 bg-cenit-50 dark:bg-cenit-900 px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-cenit-800 dark:text-white"
               />
             </div>
 
             <PasswordInput
-              label="Contraseña"
+              label={t("login.password")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              placeholder={t("login.passwordPlaceholder")}
               required
             />
 
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 text-sm text-cenit-500 dark:text-cenit-300">
                 <input type="checkbox" className="rounded border-cenit-300 text-emerald-600 focus:ring-emerald-500" />
-                Recordarme
+                {t("login.rememberMe")}
               </label>
               <Link to="/forgot-password" className="text-sm font-medium text-emerald-700 hover:text-emerald-800">
-                ¿Olvidaste tu contraseña?
+                {t("login.forgotPassword")}
               </Link>
             </div>
 
@@ -130,13 +141,13 @@ export default function Login() {
               disabled={loading}
               className="w-full rounded-xl bg-emerald-700 px-4 py-3 text-sm font-semibold text-white shadow-md hover:bg-emerald-800 transition active:scale-[0.98] disabled:opacity-60"
             >
-              {loading ? "Entrando..." : "Iniciar sesión"}
+              {loading ? t("common.loading") : t("login.submit")}
             </button>
           </form>
 
           <div className="my-6 flex items-center gap-4">
             <div className="h-px flex-1 bg-cenit-100 dark:bg-cenit-700"></div>
-            <span className="text-xs text-cenit-400 uppercase tracking-wider">o</span>
+            <span className="text-xs text-cenit-400 uppercase tracking-wider">{t("login.or")}</span>
             <div className="h-px flex-1 bg-cenit-100 dark:bg-cenit-700"></div>
           </div>
 
@@ -150,12 +161,12 @@ export default function Login() {
               <path d="M5.83 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.65 2.84c.87-2.6 3.3-4.53 6.17-4.53z" fill="#EA4335" />
             </svg>
-            Iniciar sesión con Google
+            {t("login.google")}
           </button>
 
           <p className="mt-8 text-center text-sm text-cenit-400">
-            ¿No tienes cuenta?{' '}
-            <Link to="/register" className="font-medium text-emerald-700 hover:text-emerald-800">Regístrate</Link>
+            {t("login.noAccount")}{' '}
+            <Link to="/register" className="font-medium text-emerald-700 hover:text-emerald-800">{t("login.register")}</Link>
           </p>
         </div>
       </div>

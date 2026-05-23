@@ -100,4 +100,5 @@ jobs:
         run: pip install requests
 
       - name: Validar Commits y Cambios con Taiga
+        working-directory: .
         run: python scripts/validar_taiga.py

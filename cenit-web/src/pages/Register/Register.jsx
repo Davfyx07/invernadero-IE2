@@ -2,7 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { useTheme } from "../../context/ThemeContext";
+import { useI18n } from "../../hooks/useI18n";
+import { useApiError } from "../../hooks/useApiError";
 import PasswordInput from "../../components/PasswordInput";
+import LanguageSelector from "../../components/LanguageSelector";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -18,6 +21,8 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
   const { theme } = useTheme();
+  const { t } = useI18n();
+  const { handleError } = useApiError();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -30,11 +35,11 @@ export default function Register() {
     setError("");
 
     if (form.password !== form.confirmPassword) {
-      setError("Las contraseñas no coinciden");
+      setError(t("register.error.passwordMatch"));
       return;
     }
     if (!form.terms) {
-      setError("Debes aceptar los términos");
+      setError(t("register.error.terms"));
       return;
     }
 
@@ -49,7 +54,7 @@ export default function Register() {
       });
       navigate("/verify-email", { state: { email: form.email } });
     } catch (err) {
-      setError(err.response?.data?.message || "Error al registrar");
+      handleError(err, { setFormError: setError, fallbackKey: "common.error.generic" });
     } finally {
       setLoading(false);
     }
@@ -64,7 +69,11 @@ export default function Register() {
 
   return (
     <div className={`min-h-screen flex items-center justify-center p-6 ${theme === "dark" ? "bg-cenit-900" : "bg-cenit-50"}`}>
-      <div className="w-full max-w-5xl grid lg:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl bg-white dark:bg-cenit-800 border border-cenit-100 dark:border-cenit-700">
+      <div className="w-full max-w-5xl grid lg:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl bg-white dark:bg-cenit-800 border border-cenit-100 dark:border-cenit-700 relative">
+        <div className="absolute top-4 right-4 z-10">
+          <LanguageSelector />
+        </div>
+
         {/* Left brand */}
         <div className="relative hidden lg:flex flex-col justify-between p-10 bg-gradient-to-br from-emerald-700 to-emerald-900 text-white overflow-hidden">
           <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 400 400" fill="none">
@@ -88,7 +97,7 @@ export default function Register() {
               <h1 className="text-2xl font-semibold tracking-tight">Cenit</h1>
             </div>
             <p className="text-emerald-100 text-lg leading-relaxed max-w-sm">
-              Únete a la plataforma líder en gestión inteligente de invernaderos. Controla cultivos, zonas e insumos desde un solo lugar.
+              {t("app.subtitle")}
             </p>
           </div>
           <div className="relative z-10 text-sm text-emerald-200/80">
@@ -99,8 +108,8 @@ export default function Register() {
         {/* Right form */}
         <div className="p-8 md:p-12 flex flex-col justify-center">
           <div className="mb-8">
-            <h2 className="text-2xl font-semibold text-cenit-800 dark:text-white mb-2">Crear cuenta</h2>
-            <p className="text-cenit-400">Regístrate para comenzar a gestionar tus invernaderos.</p>
+            <h2 className="text-2xl font-semibold text-cenit-800 dark:text-white mb-2">{t("register.title")}</h2>
+            <p className="text-cenit-400">{t("register.subtitle")}</p>
           </div>
 
           {error && (
@@ -112,23 +121,23 @@ export default function Register() {
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label className="block text-sm font-medium text-cenit-700 dark:text-cenit-200 mb-1.5">Nombre</label>
+                <label className="block text-sm font-medium text-cenit-700 dark:text-cenit-200 mb-1.5">{t("register.nombre")}</label>
                 <input type="text" name="nombre" value={form.nombre} onChange={handleChange} required className={inputClass} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-cenit-700 dark:text-cenit-200 mb-1.5">Apellido</label>
+                <label className="block text-sm font-medium text-cenit-700 dark:text-cenit-200 mb-1.5">{t("register.apellido")}</label>
                 <input type="text" name="apellido" value={form.apellido} onChange={handleChange} required className={inputClass} />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-cenit-700 dark:text-cenit-200 mb-1.5">Correo electrónico</label>
+              <label className="block text-sm font-medium text-cenit-700 dark:text-cenit-200 mb-1.5">{t("register.email")}</label>
               <input type="email" name="email" value={form.email} onChange={handleChange} required className={inputClass} />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <PasswordInput
-                label="Contraseña"
+                label={t("register.password")}
                 name="password"
                 value={form.password}
                 onChange={handleChange}
@@ -136,7 +145,7 @@ export default function Register() {
                 required
               />
               <PasswordInput
-                label="Confirmar contraseña"
+                label={t("register.confirmPassword")}
                 name="confirmPassword"
                 value={form.confirmPassword}
                 onChange={handleChange}
@@ -146,13 +155,13 @@ export default function Register() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-cenit-700 dark:text-cenit-200 mb-1.5">Teléfono (opcional)</label>
+              <label className="block text-sm font-medium text-cenit-700 dark:text-cenit-200 mb-1.5">{t("register.telefono")}</label>
               <input type="tel" name="telefono" value={form.telefono} onChange={handleChange} className={inputClass} />
             </div>
 
             <label className="flex items-start gap-2 text-sm text-cenit-500 dark:text-cenit-300">
               <input type="checkbox" name="terms" checked={form.terms} onChange={handleChange} className="mt-0.5 rounded border-cenit-300 text-emerald-600 focus:ring-emerald-500" />
-              <span>Acepto los <span className="text-emerald-700 hover:text-emerald-800 cursor-pointer font-medium">Términos de servicio</span> y la <span className="text-emerald-700 hover:text-emerald-800 cursor-pointer font-medium">Política de privacidad</span></span>
+              <span>{t("register.terms")}</span>
             </label>
 
             <button
@@ -160,13 +169,13 @@ export default function Register() {
               disabled={loading}
               className="w-full rounded-xl bg-emerald-700 px-4 py-3 text-sm font-semibold text-white shadow-md hover:bg-emerald-800 transition active:scale-[0.98] disabled:opacity-60"
             >
-              {loading ? "Creando cuenta..." : "Crear cuenta"}
+              {loading ? t("common.loading") : t("register.submit")}
             </button>
           </form>
 
           <div className="my-6 flex items-center gap-4">
             <div className="h-px flex-1 bg-cenit-100 dark:bg-cenit-700"></div>
-            <span className="text-xs text-cenit-400 uppercase tracking-wider">o</span>
+            <span className="text-xs text-cenit-400 uppercase tracking-wider">{t("register.or")}</span>
             <div className="h-px flex-1 bg-cenit-100 dark:bg-cenit-700"></div>
           </div>
 
@@ -180,12 +189,12 @@ export default function Register() {
               <path d="M5.83 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.65 2.84c.87-2.6 3.3-4.53 6.17-4.53z" fill="#EA4335" />
             </svg>
-            Registrarse con Google
+            {t("register.google")}
           </button>
 
           <p className="mt-8 text-center text-sm text-cenit-400">
-            ¿Ya tienes cuenta?{' '}
-            <Link to="/login" className="font-medium text-emerald-700 hover:text-emerald-800">Inicia sesión</Link>
+            {t("register.hasAccount")}{' '}
+            <Link to="/login" className="font-medium text-emerald-700 hover:text-emerald-800">{t("register.login")}</Link>
           </p>
         </div>
       </div>

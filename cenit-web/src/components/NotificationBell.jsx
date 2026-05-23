@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import api from "../api/axiosConfig";
+import { useI18n } from "../hooks/useI18n";
 
 export default function NotificationBell() {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const [notifs, setNotifs] = useState([]);
   const [count, setCount] = useState(0);
@@ -52,7 +54,7 @@ export default function NotificationBell() {
       <button
         onClick={() => { setOpen((v) => !v); if (!open) fetchData(); }}
         className="relative p-2 rounded-xl hover:bg-cenit-50 dark:hover:bg-cenit-700 transition"
-        aria-label="Notificaciones"
+        aria-label={t("notification.title")}
       >
         <svg
           className="w-5 h-5 text-cenit-600 dark:text-cenit-300"
@@ -75,21 +77,21 @@ export default function NotificationBell() {
         <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-cenit-900 rounded-xl shadow-2xl border border-cenit-100 dark:border-cenit-700 z-50 overflow-hidden">
           <div className="px-4 py-3 border-b border-cenit-100 dark:border-cenit-700 flex items-center justify-between">
             <span className="text-sm font-semibold text-cenit-800 dark:text-white">
-              Notificaciones
+              {t("notification.title")}
             </span>
             {count > 0 && (
               <span className="text-xs px-2 py-0.5 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-300 rounded-full font-medium">
-                {count} sin leer
+                {count} {t("notification.unread")}
               </span>
             )}
           </div>
 
           <div className="max-h-72 overflow-y-auto">
             {loading ? (
-              <div className="p-6 text-center text-sm text-cenit-400">Cargando...</div>
+              <div className="p-6 text-center text-sm text-cenit-400">{t("notification.loading")}</div>
             ) : notifs.length === 0 ? (
               <div className="p-6 text-center text-sm text-cenit-400">
-                No tienes notificaciones pendientes
+                {t("notification.empty")}
               </div>
             ) : (
               notifs.map((n) => (

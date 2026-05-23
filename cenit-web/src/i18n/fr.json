@@ -34,7 +34,11 @@
     "google": "Se connecter avec Google",
     "noAccount": "Vous n'avez pas de compte ?",
     "register": "Inscrivez-vous",
-    "demo": "Passer au tableau de bord (démo)"
+    "demo": "Passer au tableau de bord (démo)",
+    "error": {
+      "credentials": "Adresse e-mail ou mot de passe incorrect. Vérifiez et réessayez.",
+      "generic": "Nous n'avons pas pu vous connecter. Veuillez réessayer plus tard."
+    }
   },
   "register": {
     "title": "Créer un compte",
@@ -50,7 +54,72 @@
     "or": "ou",
     "google": "S'inscrire avec Google",
     "hasAccount": "Vous avez déjà un compte ?",
-    "login": "Se connecter"
+    "login": "Se connecter",
+    "error": {
+      "passwordMatch": "Les mots de passe saisis ne correspondent pas.",
+      "terms": "Vous devez accepter les conditions générales pour continuer."
+    }
+  },
+  "verify": {
+    "title": "Vérifiez votre e-mail",
+    "subtitle": "Nous avons envoyé un code de 6 chiffres à {email}",
+    "codeLabel": "Code de vérification",
+    "codePlaceholder": "000000",
+    "verifyBtn": "Vérifier",
+    "verifying": "Vérification...",
+    "resendBtn": "Renvoyer le code",
+    "resending": "Renvoi en cours...",
+    "error": {
+      "codeLength": "Veuillez saisir le code à 6 chiffres.",
+      "invalid": "Le code saisi n'est pas valide. Veuillez réessayer."
+    }
+  },
+  "forgot": {
+    "title": "Récupérer le mot de passe",
+    "subtitle": "Saisissez votre e-mail et nous vous enverrons un code de récupération.",
+    "verifySubtitle": "Saisissez le code de 6 chiffres envoyé à {email}",
+    "sendBtn": "Envoyer le code",
+    "sending": "Envoi en cours...",
+    "continueBtn": "Continuer",
+    "backToLogin": "Retour à la connexion",
+    "useOtherEmail": "Utiliser un autre e-mail"
+  },
+  "changePassword": {
+    "title": "Changer le mot de passe",
+    "firstLoginTitle": "Changez votre mot de passe",
+    "recoveryTitle": "Nouveau mot de passe",
+    "subtitle": "Créez un mot de passe sécurisé pour votre compte.",
+    "firstLoginSubtitle": "Vous devez changer votre mot de passe temporaire avant de continuer.",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le nouveau mot de passe",
+    "saveBtn": "Enregistrer le mot de passe",
+    "saving": "Enregistrement...",
+    "successTitle": "Mot de passe mis à jour",
+    "successMessage": "Votre mot de passe a été changé avec succès. Vous pouvez maintenant vous connecter.",
+    "loginBtn": "Se connecter",
+    "error": {
+      "minLength": "Le mot de passe doit contenir au moins 6 caractères.",
+      "match": "Les mots de passe ne correspondent pas."
+    }
+  },
+  "notification": {
+    "title": "Notifications",
+    "empty": "Vous n'avez pas de notifications en attente",
+    "loading": "Chargement...",
+    "unread": "non lues"
+  },
+  "erd": {
+    "diagram": "Diagramme",
+    "dictionary": "Dictionnaire de Données",
+    "backToDashboard": "← Retour au tableau de bord",
+    "entities": "Entités",
+    "relations": "Relations",
+    "detail": "Détail",
+    "table": "table",
+    "resetPositions": "↺ Réinitialiser positions",
+    "reload": "⟳ Recharger le modèle",
+    "loading": "Chargement du modèle..."
   },
   "dashboard": {
     "title": "Tableau de bord",
@@ -91,14 +160,23 @@
     "back": "← Retour",
     "search": "Rechercher...",
     "required": "Ce champ est obligatoire",
-    "created": "Créé avec succès",
-    "updated": "Mis à jour avec succès",
-    "deleted": "Supprimé avec succès",
-    "errorLoad": "Erreur de chargement",
-    "errorSave": "Erreur d'enregistrement",
-    "errorDelete": "Erreur de suppression",
+    "created": "Enregistrement créé avec succès",
+    "updated": "Enregistrement mis à jour avec succès",
+    "deleted": "Enregistrement supprimé avec succès",
+    "deactivated": "Enregistrement désactivé avec succès",
+    "reactivated": "Enregistrement réactivé avec succès",
+    "errorLoad": "Nous n'avons pas pu charger les données. Veuillez réessayer.",
+    "errorSave": "Nous n'avons pas pu enregistrer les modifications. Veuillez réessayer.",
+    "errorDelete": "Nous n'avons pas pu supprimer l'enregistrement. Veuillez réessayer.",
+    "toggleError": "Nous n'avons pas pu changer le statut de l'enregistrement. Veuillez réessayer.",
     "confirmDelete": "Supprimer cet enregistrement ?",
-    "noData": "Aucune donnée disponible"
+    "confirmDeleteTitle": "Confirmer la suppression",
+    "confirmDeleteBody": "Êtes-vous sûr de vouloir supprimer cet enregistrement ? Cette action est irréversible.",
+    "confirmDeactivateTitle": "Confirmer la désactivation",
+    "confirmDeactivateBody": "Êtes-vous sûr de vouloir désactiver cet enregistrement ? Vous pourrez le réactiver plus tard.",
+    "noData": "Aucune donnée disponible",
+    "select": "Sélectionner...",
+    "requiredField": "Veuillez remplir le champ \"{field}\""
   },
   "common": {
     "loading": "Chargement...",
@@ -110,6 +188,18 @@
     "confirmDelete": "Supprimer cet enregistrement ?",
     "noResults": "Aucun résultat trouvé",
     "error": "Une erreur s'est produite",
-    "success": "Opération réussie"
+    "success": "Opération réussie",
+    "language": "Langue",
+    "yes": "Oui",
+    "no": "Non",
+    "error": {
+      "network": "Il semble que vous soyez hors ligne. Vérifiez votre connexion et réessayez.",
+      "unauthorized": "Votre session a expiré. Veuillez vous reconnecter.",
+      "forbidden": "Vous n'avez pas la permission d'effectuer cette action.",
+      "notFound": "La ressource demandée n'existe pas.",
+      "conflict": "Un enregistrement avec ces informations existe déjà.",
+      "server": "Nous avons rencontré un problème sur nos serveurs. Veuillez réessayer dans quelques minutes.",
+      "generic": "Quelque chose s'est mal passé. Veuillez réessayer."
+    }
   }
 }

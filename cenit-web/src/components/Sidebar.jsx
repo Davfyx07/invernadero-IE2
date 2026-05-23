@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useI18n } from "../hooks/useI18n";
+import LanguageSelector from "./LanguageSelector";
 
 const NAV_LINKS = [
   { to: "/", labelKey: "nav.dashboard", icon: iconDashboard },
@@ -90,7 +91,10 @@ export default function Sidebar() {
         </nav>
 
         {/* Bottom */}
-        <div className="px-3 pb-4">
+        <div className="px-3 pb-4 space-y-2">
+          <div className={collapsed ? "flex justify-center" : ""}>
+            <LanguageSelector />
+          </div>
           <button
             onClick={() => setCollapsed((v) => !v)}
             className="w-full flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-medium text-slate-400 hover:text-white hover:bg-white/5 transition"

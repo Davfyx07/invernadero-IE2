@@ -35,7 +35,11 @@
     "google": "Sign in with Google",
     "noAccount": "Don't have an account?",
     "register": "Register",
-    "demo": "Skip to Dashboard (demo)"
+    "demo": "Skip to Dashboard (demo)",
+    "error": {
+      "credentials": "Incorrect email or password. Please check and try again.",
+      "generic": "We couldn't sign you in. Please try again later."
+    }
   },
   "register": {
     "title": "Create account",
@@ -51,7 +55,72 @@
     "or": "or",
     "google": "Register with Google",
     "hasAccount": "Already have an account?",
-    "login": "Sign in"
+    "login": "Sign in",
+    "error": {
+      "passwordMatch": "The passwords you entered do not match.",
+      "terms": "You must accept the terms and conditions to continue."
+    }
+  },
+  "verify": {
+    "title": "Verify your email",
+    "subtitle": "We sent a 6-digit code to {email}",
+    "codeLabel": "Verification code",
+    "codePlaceholder": "000000",
+    "verifyBtn": "Verify",
+    "verifying": "Verifying...",
+    "resendBtn": "Resend code",
+    "resending": "Resending...",
+    "error": {
+      "codeLength": "Please enter the 6-digit code.",
+      "invalid": "The code you entered is not valid. Please try again."
+    }
+  },
+  "forgot": {
+    "title": "Recover password",
+    "subtitle": "Enter your email and we will send you a recovery code.",
+    "verifySubtitle": "Enter the 6-digit code sent to {email}",
+    "sendBtn": "Send code",
+    "sending": "Sending...",
+    "continueBtn": "Continue",
+    "backToLogin": "Back to sign in",
+    "useOtherEmail": "Use another email"
+  },
+  "changePassword": {
+    "title": "Change password",
+    "firstLoginTitle": "Change your password",
+    "recoveryTitle": "New password",
+    "subtitle": "Create a secure password for your account.",
+    "firstLoginSubtitle": "You must change your temporary password before continuing.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "saveBtn": "Save password",
+    "saving": "Saving...",
+    "successTitle": "Password updated",
+    "successMessage": "Your password has been changed successfully. You can now sign in.",
+    "loginBtn": "Sign in",
+    "error": {
+      "minLength": "Password must be at least 6 characters long.",
+      "match": "Passwords do not match."
+    }
+  },
+  "notification": {
+    "title": "Notifications",
+    "empty": "You have no pending notifications",
+    "loading": "Loading...",
+    "unread": "unread"
+  },
+  "erd": {
+    "diagram": "Diagram",
+    "dictionary": "Data Dictionary",
+    "backToDashboard": "← Back to Dashboard",
+    "entities": "Entities",
+    "relations": "Relations",
+    "detail": "Detail",
+    "table": "table",
+    "resetPositions": "↺ Reset positions",
+    "reload": "⟳ Reload model",
+    "loading": "Loading model..."
   },
   "dashboard": {
     "title": "Dashboard",
@@ -92,14 +161,23 @@
     "back": "← Back",
     "search": "Search...",
     "required": "This field is required",
-    "created": "Created successfully",
-    "updated": "Updated successfully",
-    "deleted": "Deleted successfully",
-    "errorLoad": "Error loading data",
-    "errorSave": "Error saving",
-    "errorDelete": "Error deleting",
+    "created": "Record created successfully",
+    "updated": "Record updated successfully",
+    "deleted": "Record deleted successfully",
+    "deactivated": "Record deactivated successfully",
+    "reactivated": "Record reactivated successfully",
+    "errorLoad": "We couldn't load the data. Please try again.",
+    "errorSave": "We couldn't save the changes. Please try again.",
+    "errorDelete": "We couldn't delete the record. Please try again.",
+    "toggleError": "We couldn't change the record status. Please try again.",
     "confirmDelete": "Delete this record?",
-    "noData": "No data available"
+    "confirmDeleteTitle": "Confirm deletion",
+    "confirmDeleteBody": "Are you sure you want to delete this record? This action cannot be undone.",
+    "confirmDeactivateTitle": "Confirm deactivation",
+    "confirmDeactivateBody": "Are you sure you want to deactivate this record? You can reactivate it later.",
+    "noData": "No data available",
+    "select": "Select...",
+    "requiredField": "Please complete the \"{field}\" field"
   },
   "common": {
     "loading": "Loading...",
@@ -111,6 +189,18 @@
     "confirmDelete": "Delete this record?",
     "noResults": "No results found",
     "error": "An error occurred",
-    "success": "Operation successful"
+    "success": "Operation successful",
+    "language": "Language",
+    "yes": "Yes",
+    "no": "No",
+    "error": {
+      "network": "It seems you are offline. Check your connection and try again.",
+      "unauthorized": "Your session has expired. Please log in again.",
+      "forbidden": "You don't have permission to perform this action.",
+      "notFound": "The requested resource was not found.",
+      "conflict": "A record with that information already exists.",
+      "server": "We had a problem with our servers. Please try again in a few minutes.",
+      "generic": "Something went wrong. Please try again."
+    }
   }
 }

@@ -1,0 +1,685 @@
+{
+  "entities": [
+    {
+      "name": "Cultivo",
+      "table": "cultivos",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": true,
+          "isEnum": false
+        },
+        {
+          "name": "especie",
+          "type": "String",
+          "length": 100,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "variedad",
+          "type": "String",
+          "length": 100,
+          "nullable": true,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "fechaSiembra",
+          "type": "LocalDate",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "fechaCosecha",
+          "type": "LocalDate",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "estado",
+          "type": "String",
+          "length": 50,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "zona_id",
+          "type": "Long",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "usuario_id",
+          "type": "Long",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "activo",
+          "type": "boolean",
+          "length": null,
+          "nullable": false,
+          "default": "true",
+          "isId": false,
+          "isEnum": false
+        }
+      ]
+    },
+    {
+      "name": "Insumo",
+      "table": "insumos",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": true,
+          "isEnum": false
+        },
+        {
+          "name": "nombre",
+          "type": "String",
+          "length": 100,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "tipo",
+          "type": "String",
+          "length": 50,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "unidadMedida",
+          "type": "String",
+          "length": 20,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "stockActual",
+          "type": "Double",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "activo",
+          "type": "boolean",
+          "length": null,
+          "nullable": false,
+          "default": "true",
+          "isId": false,
+          "isEnum": false
+        }
+      ]
+    },
+    {
+      "name": "Invernadero",
+      "table": "invernaderos",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": true,
+          "isEnum": false
+        },
+        {
+          "name": "nombre",
+          "type": "String",
+          "length": 100,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "ubicacion",
+          "type": "String",
+          "length": 200,
+          "nullable": true,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "descripcion",
+          "type": "String",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "creadoEn",
+          "type": "LocalDateTime",
+          "length": null,
+          "nullable": false,
+          "default": "LocalDateTime.now()",
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "activo",
+          "type": "boolean",
+          "length": null,
+          "nullable": false,
+          "default": "true",
+          "isId": false,
+          "isEnum": false
+        }
+      ]
+    },
+    {
+      "name": "LecturaSensor",
+      "table": "lecturas_sensores",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": true,
+          "isEnum": false
+        },
+        {
+          "name": "zona_id",
+          "type": "Long",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "humedad",
+          "type": "Double",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "temperatura",
+          "type": "Double",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "fechaHora",
+          "type": "LocalDateTime",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "activo",
+          "type": "boolean",
+          "length": null,
+          "nullable": false,
+          "default": "true",
+          "isId": false,
+          "isEnum": false
+        }
+      ]
+    },
+    {
+      "name": "Notificacion",
+      "table": "notificaciones",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": true,
+          "isEnum": false
+        },
+        {
+          "name": "usuario_id",
+          "type": "Long",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "titulo",
+          "type": "String",
+          "length": 100,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "mensaje",
+          "type": "String",
+          "length": 500,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "tipo",
+          "type": "String",
+          "length": 30,
+          "nullable": true,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "leida",
+          "type": "boolean",
+          "length": null,
+          "nullable": false,
+          "default": "false",
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "creadoEn",
+          "type": "LocalDateTime",
+          "length": null,
+          "nullable": false,
+          "default": "LocalDateTime.now()",
+          "isId": false,
+          "isEnum": false
+        }
+      ]
+    },
+    {
+      "name": "OtpToken",
+      "table": "otp_tokens",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": true,
+          "isEnum": false
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "length": 150,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "code",
+          "type": "String",
+          "length": 6,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "type",
+          "type": "String",
+          "length": 30,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "expiry",
+          "type": "LocalDateTime",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "used",
+          "type": "boolean",
+          "length": null,
+          "nullable": false,
+          "default": "false",
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "createdAt",
+          "type": "LocalDateTime",
+          "length": null,
+          "nullable": false,
+          "default": "LocalDateTime.now()",
+          "isId": false,
+          "isEnum": false
+        }
+      ]
+    },
+    {
+      "name": "Parametro",
+      "table": "parametros",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": true,
+          "isEnum": false
+        },
+        {
+          "name": "tipo",
+          "type": "String",
+          "length": 50,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "codigo",
+          "type": "String",
+          "length": 50,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "nombre",
+          "type": "String",
+          "length": 100,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "activo",
+          "type": "boolean",
+          "length": null,
+          "nullable": false,
+          "default": "true",
+          "isId": false,
+          "isEnum": false
+        }
+      ]
+    },
+    {
+      "name": "RegistroActividad",
+      "table": "registros_actividad",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": true,
+          "isEnum": false
+        },
+        {
+          "name": "tipo",
+          "type": "String",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "fecha",
+          "type": "LocalDateTime",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "cantidad",
+          "type": "Double",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "notas",
+          "type": "String",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "cultivo_id",
+          "type": "Long",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "insumo_id",
+          "type": "Long",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "usuario_id",
+          "type": "Long",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "activo",
+          "type": "boolean",
+          "length": null,
+          "nullable": false,
+          "default": "true",
+          "isId": false,
+          "isEnum": false
+        }
+      ]
+    },
+    {
+      "name": "Usuario",
+      "table": "usuarios",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": true,
+          "isEnum": false
+        },
+        {
+          "name": "nombre",
+          "type": "String",
+          "length": 100,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "length": 150,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "password",
+          "type": "String",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "rol",
+          "type": "Rol",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": true
+        },
+        {
+          "name": "activo",
+          "type": "boolean",
+          "length": null,
+          "nullable": false,
+          "default": "true",
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "emailVerified",
+          "type": "boolean",
+          "length": null,
+          "nullable": false,
+          "default": "false",
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "firstLogin",
+          "type": "boolean",
+          "length": null,
+          "nullable": false,
+          "default": "true",
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "creadoEn",
+          "type": "LocalDateTime",
+          "length": null,
+          "nullable": false,
+          "default": "LocalDateTime.now()",
+          "isId": false,
+          "isEnum": false
+        }
+      ]
+    },
+    {
+      "name": "Zona",
+      "table": "zonas",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": true,
+          "isEnum": false
+        },
+        {
+          "name": "nombre",
+          "type": "String",
+          "length": 100,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "capacidad",
+          "type": "Integer",
+          "length": null,
+          "nullable": true,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "invernadero_id",
+          "type": "Long",
+          "length": null,
+          "nullable": false,
+          "default": null,
+          "isId": false,
+          "isEnum": false
+        },
+        {
+          "name": "activo",
+          "type": "boolean",
+          "length": null,
+          "nullable": false,
+          "default": "true",
+          "isId": false,
+          "isEnum": false
+        }
+      ]
+    }
+  ]
+}

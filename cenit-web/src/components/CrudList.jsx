@@ -17,24 +17,24 @@ function resolveFkName(entity, key, id, fkCache) {
   return cache ? findFkLabel(fkEntity, id, cache) : `ID ${id || "—"}`;
 }
 
-function renderCell(item, col, entity, fkCache) {
+function renderCell(item, col, entity, fkCache, t) {
   const v = item[col.accessor || col.key];
-  const t = col.type || "text";
-  if (t === "date") return formatDate(v);
-  if (t === "datetime") return formatDateTime(v);
-  if (t === "bool" || t === "boolean")
+  const type = col.type || "text";
+  if (type === "date") return formatDate(v);
+  if (type === "datetime") return formatDateTime(v);
+  if (type === "bool" || type === "boolean")
     return (
       <span className={["inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold", boolBadge(Boolean(v))].join(" ")}>
-        {v ? "Sí" : "No"}
+        {v ? t("common.yes") : t("common.no")}
       </span>
     );
-  if (t === "enum")
+  if (type === "enum")
     return (
       <span className={["inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold", enumBadge(v, col.enumColors || {})].join(" ")}>
         {col.enumLabels?.[v] || v}
       </span>
     );
-  if (t === "fk") return resolveFkName(entity, col.key, v, fkCache);
+  if (type === "fk") return resolveFkName(entity, col.key, v, fkCache);
   return v != null ? String(v) : "—";
 }
 
@@ -67,11 +67,11 @@ export default function CrudList({ entity, columns, api, fkEntities, hasForm, fo
       const res = await api.getAll(0, 500);
       setItems(res.data?.content ?? res.data ?? []);
     } catch {
-      show("Error al cargar datos", "error");
+      show(t("crud.errorLoad"), "error");
     } finally {
       setLoading(false);
     }
-  }, [api.getAll, show]);
+  }, [api.getAll, show, t]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -91,10 +91,10 @@ export default function CrudList({ entity, columns, api, fkEntities, hasForm, fo
     if (!confirmDelete) return;
     try {
       await api.delete(confirmDelete.id);
-      show(confirmDelete.activo !== false ? "Desactivado correctamente" : "Eliminado correctamente", "success");
+      show(t("crud.deleted"), "success");
       load();
     } catch {
-      show("Error al cambiar estado", "error");
+      show(t("crud.errorDelete"), "error");
     } finally {
       setConfirmDelete(null);
     }
@@ -105,14 +105,14 @@ export default function CrudList({ entity, columns, api, fkEntities, hasForm, fo
     try {
       if (nuevoEstado) {
         await api.update(item.id, { ...item, activo: true });
-        show("Reactivado correctamente", "success");
+        show(t("crud.reactivated"), "success");
       } else {
         await api.delete(item.id);
-        show("Desactivado correctamente", "success");
+        show(t("crud.deactivated"), "success");
       }
       load();
     } catch {
-      show("Error al cambiar estado", "error");
+      show(t("crud.toggleError"), "error");
     } finally {
       setConfirmToggle(null);
     }
@@ -129,7 +129,7 @@ export default function CrudList({ entity, columns, api, fkEntities, hasForm, fo
     enumColors: c.enumColors,
     enumLabels: c.enumLabels,
   }));
-  cols.push({ key: "actions", header: "Acciones" });
+  cols.push({ key: "actions", header: t("common.actions") || "Acciones" });
 
   return (
     <div className="flex-1 flex flex-col min-w-0">
@@ -144,7 +144,7 @@ export default function CrudList({ entity, columns, api, fkEntities, hasForm, fo
               onClick={() => navigate(`${routeBase}/nuevo`)}
               className="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2 rounded-xl text-sm font-medium transition active:scale-[0.98]"
             >
-              + Nuevo
+              {t("crud.new")}
             </button>
           )}
         </div>
@@ -155,13 +155,13 @@ export default function CrudList({ entity, columns, api, fkEntities, hasForm, fo
           columns={cols}
           data={items}
           keyExtractor={(item) => item.id}
-          searchPlaceholder={`Buscar ${entity.toLowerCase()}...`}
+          searchPlaceholder={t("crud.search")}
           loading={loading}
           renderRow={(item) => (
             <>
               {columns.map((c) => (
                 <td key={c.key || c.accessor} className="py-3 text-cenit-500 dark:text-cenit-300">
-                  {renderCell(item, c, entity, fkCache)}
+                  {renderCell(item, c, entity, fkCache, t)}
                 </td>
               ))}
               <td className="py-3">
@@ -171,7 +171,7 @@ export default function CrudList({ entity, columns, api, fkEntities, hasForm, fo
                       onClick={() => navigate(`${routeBase}/${item.id}/editar`)}
                       className="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 px-3 py-1 rounded-lg text-xs font-medium hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition"
                     >
-                      Editar
+                      {t("common.edit")}
                     </button>
                   )}
                   {canCrud && item.activo !== undefined && (
@@ -184,7 +184,7 @@ export default function CrudList({ entity, columns, api, fkEntities, hasForm, fo
                           : "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/40",
                       ].join(" ")}
                     >
-                      {item.activo ? "Desactivar" : "Reactivar"}
+                      {item.activo ? t("common.delete") : t("crud.reactivated")}
                     </button>
                   )}
                   {canCrud && item.activo === undefined && (
@@ -192,7 +192,7 @@ export default function CrudList({ entity, columns, api, fkEntities, hasForm, fo
                       onClick={() => setConfirmDelete(item)}
                       className="bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 px-3 py-1 rounded-lg text-xs font-medium hover:bg-red-100 dark:hover:bg-red-900/40 transition"
                     >
-                      Eliminar
+                      {t("common.delete")}
                     </button>
                   )}
                 </div>
@@ -213,28 +213,28 @@ export default function CrudList({ entity, columns, api, fkEntities, hasForm, fo
           onClose={handleFormClose}
         />
       )}
-      {confirmDelete && (
-        <ConfirmDialog
-          open={true}
-          title="Confirmar eliminación"
-          message={`¿Estás seguro de eliminar este registro? Esta acción no se puede deshacer.`}
-          confirmLabel="Eliminar"
-          confirmColor="bg-red-600 hover:bg-red-700"
-          onConfirm={handleDeleteConfirm}
-          onCancel={() => setConfirmDelete(null)}
-        />
-      )}
-      {confirmToggle && (
-        <ConfirmDialog
-          open={true}
-          title="Confirmar desactivación"
-          message={`¿Estás seguro de desactivar este registro? Podrás reactivarlo después.`}
-          confirmLabel="Desactivar"
-          confirmColor="bg-red-600 hover:bg-red-700"
-          onConfirm={() => handleToggleActivo(confirmToggle)}
-          onCancel={() => setConfirmToggle(null)}
-        />
-      )}
+        {confirmDelete && (
+          <ConfirmDialog
+            open={true}
+            title={t("crud.confirmDeleteTitle")}
+            message={t("crud.confirmDeleteBody")}
+            confirmLabel={t("common.delete")}
+            confirmColor="bg-red-600 hover:bg-red-700"
+            onConfirm={handleDeleteConfirm}
+            onCancel={() => setConfirmDelete(null)}
+          />
+        )}
+        {confirmToggle && (
+          <ConfirmDialog
+            open={true}
+            title={t("crud.confirmDeactivateTitle")}
+            message={t("crud.confirmDeactivateBody")}
+            confirmLabel={t("common.delete")}
+            confirmColor="bg-red-600 hover:bg-red-700"
+            onConfirm={() => handleToggleActivo(confirmToggle)}
+            onCancel={() => setConfirmToggle(null)}
+          />
+        )}
     </div>
   );
 }

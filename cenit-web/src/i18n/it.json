@@ -34,7 +34,11 @@
     "google": "Accedi con Google",
     "noAccount": "Non hai un account?",
     "register": "Registrati",
-    "demo": "Vai al Dashboard (demo)"
+    "demo": "Vai al Dashboard (demo)",
+    "error": {
+      "credentials": "Email o password non corretti. Verifica e riprova.",
+      "generic": "Non siamo riusciti ad accedere. Riprova più tardi."
+    }
   },
   "register": {
     "title": "Crea account",
@@ -50,7 +54,72 @@
     "or": "o",
     "google": "Registrati con Google",
     "hasAccount": "Hai già un account?",
-    "login": "Accedi"
+    "login": "Accedi",
+    "error": {
+      "passwordMatch": "Le password inserite non corrispondono.",
+      "terms": "Devi accettare i termini e le condizioni per continuare."
+    }
+  },
+  "verify": {
+    "title": "Verifica la tua email",
+    "subtitle": "Abbiamo inviato un codice a 6 cifre a {email}",
+    "codeLabel": "Codice di verifica",
+    "codePlaceholder": "000000",
+    "verifyBtn": "Verifica",
+    "verifying": "Verifica in corso...",
+    "resendBtn": "Invia di nuovo il codice",
+    "resending": "Invio in corso...",
+    "error": {
+      "codeLength": "Inserisci il codice a 6 cifre.",
+      "invalid": "Il codice inserito non è valido. Riprova."
+    }
+  },
+  "forgot": {
+    "title": "Recupera password",
+    "subtitle": "Inserisci la tua email e ti invieremo un codice di recupero.",
+    "verifySubtitle": "Inserisci il codice a 6 cifre inviato a {email}",
+    "sendBtn": "Invia codice",
+    "sending": "Invio in corso...",
+    "continueBtn": "Continua",
+    "backToLogin": "Torna all'accesso",
+    "useOtherEmail": "Usa un'altra email"
+  },
+  "changePassword": {
+    "title": "Cambia password",
+    "firstLoginTitle": "Cambia la tua password",
+    "recoveryTitle": "Nuova password",
+    "subtitle": "Crea una password sicura per il tuo account.",
+    "firstLoginSubtitle": "È obbligatorio cambiare la password temporanea prima di continuare.",
+    "currentPassword": "Password attuale",
+    "newPassword": "Nuova password",
+    "confirmPassword": "Conferma nuova password",
+    "saveBtn": "Salva password",
+    "saving": "Salvataggio...",
+    "successTitle": "Password aggiornata",
+    "successMessage": "La tua password è stata cambiata con successo. Ora puoi accedere.",
+    "loginBtn": "Accedi",
+    "error": {
+      "minLength": "La password deve contenere almeno 6 caratteri.",
+      "match": "Le password non corrispondono."
+    }
+  },
+  "notification": {
+    "title": "Notifiche",
+    "empty": "Non hai notifiche in sospeso",
+    "loading": "Caricamento...",
+    "unread": "non lette"
+  },
+  "erd": {
+    "diagram": "Diagramma",
+    "dictionary": "Dizionario Dati",
+    "backToDashboard": "← Torna al Dashboard",
+    "entities": "Entità",
+    "relations": "Relazioni",
+    "detail": "Dettaglio",
+    "table": "tabella",
+    "resetPositions": "↺ Reimposta posizioni",
+    "reload": "⟳ Ricarica modello",
+    "loading": "Caricamento modello..."
   },
   "dashboard": {
     "title": "Dashboard",
@@ -91,14 +160,23 @@
     "back": "← Indietro",
     "search": "Cerca...",
     "required": "Questo campo è obbligatorio",
-    "created": "Creato con successo",
-    "updated": "Aggiornato con successo",
-    "deleted": "Eliminato con successo",
-    "errorLoad": "Errore di caricamento",
-    "errorSave": "Errore di salvataggio",
-    "errorDelete": "Errore di eliminazione",
+    "created": "Record creato con successo",
+    "updated": "Record aggiornato con successo",
+    "deleted": "Record eliminato con successo",
+    "deactivated": "Record disattivato con successo",
+    "reactivated": "Record riattivato con successo",
+    "errorLoad": "Non siamo riusciti a caricare i dati. Riprova.",
+    "errorSave": "Non siamo riusciti a salvare le modifiche. Riprova.",
+    "errorDelete": "Non siamo riusciti a eliminare il record. Riprova.",
+    "toggleError": "Non siamo riusciti a cambiare lo stato del record. Riprova.",
     "confirmDelete": "Eliminare questo record?",
-    "noData": "Nessun dato disponibile"
+    "confirmDeleteTitle": "Conferma eliminazione",
+    "confirmDeleteBody": "Sei sicuro di voler eliminare questo record? Questa azione non può essere annullata.",
+    "confirmDeactivateTitle": "Conferma disattivazione",
+    "confirmDeactivateBody": "Sei sicuro di voler disattivare questo record? Potrai riattivarlo in seguito.",
+    "noData": "Nessun dato disponibile",
+    "select": "Seleziona...",
+    "requiredField": "Completa il campo \"{field}\""
   },
   "common": {
     "loading": "Caricamento...",
@@ -110,6 +188,18 @@
     "confirmDelete": "Eliminare questo record?",
     "noResults": "Nessun risultato trovato",
     "error": "Si è verificato un errore",
-    "success": "Operazione riuscita"
+    "success": "Operazione riuscita",
+    "language": "Lingua",
+    "yes": "Sì",
+    "no": "No",
+    "error": {
+      "network": "Sembra che tu sia offline. Controlla la connessione e riprova.",
+      "unauthorized": "La tua sessione è scaduta. Accedi di nuovo.",
+      "forbidden": "Non hai i permessi per eseguire questa azione.",
+      "notFound": "La risorsa richiesta non esiste.",
+      "conflict": "Esiste già un record con quelle informazioni.",
+      "server": "Abbiamo avuto un problema con i nostri server. Riprova tra qualche minuto.",
+      "generic": "Qualcosa è andato storto. Riprova."
+    }
   }
 }

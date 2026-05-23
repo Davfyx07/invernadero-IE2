@@ -1,19 +1,21 @@
 import { useEffect, useState, useMemo } from "react";
 import { useToast } from "./Toast";
+import { useI18n } from "../hooks/useI18n";
 import Modal from "./Modal";
 import baseApi from "../api/axiosConfig";
 import { fetchFkOptions } from "../api/entityRegistry";
 
 function FieldInput({ field, value, onChange, fkOptions, paramOptions }) {
-  const t = field.type || "text";
+  const { t } = useI18n();
+  const type = field.type || "text";
   const cls =
     "w-full rounded-xl border border-cenit-200 dark:border-cenit-600 bg-cenit-50 dark:bg-cenit-900 px-4 py-2.5 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-cenit-800 dark:text-white placeholder:text-cenit-300";
 
-  if (t === "hidden") {
+  if (type === "hidden") {
     return <input type="hidden" name={field.name} value={value || ""} onChange={onChange} />;
   }
 
-  if (t === "bool" || t === "boolean") {
+  if (type === "bool" || type === "boolean") {
     return (
       <label className="inline-flex items-center gap-2 cursor-pointer">
         <input
@@ -28,10 +30,10 @@ function FieldInput({ field, value, onChange, fkOptions, paramOptions }) {
     );
   }
 
-  if (t === "enum") {
+  if (type === "enum") {
     return (
       <select name={field.name} value={value || ""} onChange={onChange} className={cls}>
-        <option value="">Seleccionar...</option>
+        <option value="">{t("crud.select")}</option>
         {field.options?.map((o) => (
           <option key={o.value || o} value={o.value || o}>{o.label || o}</option>
         ))}
@@ -39,11 +41,11 @@ function FieldInput({ field, value, onChange, fkOptions, paramOptions }) {
     );
   }
 
-  if (t === "fk") {
+  if (type === "fk") {
     const opts = fkOptions[field.name] || [];
     return (
       <select name={field.name} value={value || ""} onChange={onChange} className={cls}>
-        <option value="">Seleccionar...</option>
+        <option value="">{t("crud.select")}</option>
         {opts.map((o) => (
           <option key={o.id} value={o.id}>{o.label}</option>
         ))}
@@ -51,11 +53,11 @@ function FieldInput({ field, value, onChange, fkOptions, paramOptions }) {
     );
   }
 
-  if (t === "parametro") {
+  if (type === "parametro") {
     const opts = paramOptions[field.paramTipo || field.name] || [];
     return (
       <select name={field.name} value={value || ""} onChange={onChange} className={cls}>
-        <option value="">Seleccionar...</option>
+        <option value="">{t("crud.select")}</option>
         {opts.map((o) => (
           <option key={o.codigo} value={o.codigo}>{o.nombre || o.codigo}</option>
         ))}
@@ -63,16 +65,17 @@ function FieldInput({ field, value, onChange, fkOptions, paramOptions }) {
     );
   }
 
-  if (t === "date") return <input type="date" name={field.name} value={value?.toString().substring(0, 10) || ""} onChange={onChange} className={cls} />;
-  if (t === "datetime") return <input type="datetime-local" name={field.name} value={value?.toString().substring(0, 16) || ""} onChange={onChange} className={cls} />;
-  if (t === "textarea") return <textarea name={field.name} value={value || ""} onChange={onChange} rows={3} className={cls} />;
-  if (t === "number" || t === "double" || t === "integer") return <input type="number" step="any" name={field.name} value={value ?? ""} onChange={onChange} className={cls} />;
+  if (type === "date") return <input type="date" name={field.name} value={value?.toString().substring(0, 10) || ""} onChange={onChange} className={cls} />;
+  if (type === "datetime") return <input type="datetime-local" name={field.name} value={value?.toString().substring(0, 16) || ""} onChange={onChange} className={cls} />;
+  if (type === "textarea") return <textarea name={field.name} value={value || ""} onChange={onChange} rows={3} className={cls} />;
+  if (type === "number" || type === "double" || type === "integer") return <input type="number" step="any" name={field.name} value={value ?? ""} onChange={onChange} className={cls} />;
 
   return <input type="text" name={field.name} value={value || ""} onChange={onChange} className={cls} />;
 }
 
 export default function CrudForm({ entity, fields, api, fkMap, itemId, onSaved, onClose }) {
   const { show } = useToast();
+  const { t } = useI18n();
   const isEdit = Boolean(itemId);
   const [form, setForm] = useState({});
   const [fkOptions, setFkOptions] = useState({});
@@ -102,7 +105,7 @@ export default function CrudForm({ entity, fields, api, fkMap, itemId, onSaved, 
         setForm(patched);
         setReady(true);
       }).catch(() => {
-        show("Error al cargar", "error");
+        show(t("crud.errorLoad"), "error");
         setReady(true);
       });
     } else {
@@ -152,7 +155,7 @@ export default function CrudForm({ entity, fields, api, fkMap, itemId, onSaved, 
     setError("");
     for (const f of fields) {
       if (f.required && !form[f.name] && String(form[f.name]) !== "0") {
-        setError(`El campo "${f.label || f.name}" es obligatorio`);
+        setError(t("crud.requiredField", { field: f.label || f.name }));
         return;
       }
     }
@@ -167,14 +170,14 @@ export default function CrudForm({ entity, fields, api, fkMap, itemId, onSaved, 
       });
       if (isEdit) {
         await api.update(itemId, payload);
-        show("Actualizado correctamente", "success");
+        show(t("crud.updated"), "success");
       } else {
         await api.create(payload);
-        show("Creado correctamente", "success");
+        show(t("crud.created"), "success");
       }
       onSaved?.();
     } catch (err) {
-      const msg = err.response?.data?.message || err.message || "Error al guardar";
+      const msg = err.response?.data?.message || err.message || t("crud.errorSave");
       setError(msg);
     } finally {
       setLoading(false);
@@ -186,7 +189,7 @@ export default function CrudForm({ entity, fields, api, fkMap, itemId, onSaved, 
   return (
     <Modal
       open={true}
-      title={`${isEdit ? "Editar" : "Nuevo"} ${entity}`}
+      title={`${isEdit ? t("common.edit") : t("common.create")} ${entity}`}
       onClose={onClose}
       footer={
         <>
@@ -194,7 +197,7 @@ export default function CrudForm({ entity, fields, api, fkMap, itemId, onSaved, 
             onClick={onClose}
             className="rounded-xl border border-cenit-200 dark:border-cenit-600 bg-white dark:bg-cenit-700 px-5 py-2.5 text-sm font-medium text-cenit-600 dark:text-cenit-200 hover:bg-cenit-50 dark:hover:bg-cenit-600 transition"
           >
-            Cancelar
+            {t("common.cancel")}
           </button>
           <button
             type="button"
@@ -202,7 +205,7 @@ export default function CrudForm({ entity, fields, api, fkMap, itemId, onSaved, 
             onClick={handleSubmit}
             className="rounded-xl bg-emerald-700 hover:bg-emerald-800 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition active:scale-[0.98] disabled:opacity-60"
           >
-            {loading ? "Guardando..." : isEdit ? "Actualizar" : "Crear"}
+            {loading ? t("common.loading") : isEdit ? t("common.save") : t("common.create")}
           </button>
         </>
       }

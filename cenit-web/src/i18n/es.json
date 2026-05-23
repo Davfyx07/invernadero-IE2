@@ -34,7 +34,11 @@
     "google": "Iniciar sesión con Google",
     "noAccount": "¿No tienes cuenta?",
     "register": "Regístrate",
-    "demo": "Saltar al Dashboard (demo)"
+    "demo": "Saltar al Dashboard (demo)",
+    "error": {
+      "credentials": "Correo o contraseña incorrectos. Verifica e inténtalo de nuevo.",
+      "generic": "No pudimos iniciar sesión. Inténtalo más tarde."
+    }
   },
   "register": {
     "title": "Crear cuenta",
@@ -50,7 +54,72 @@
     "or": "o",
     "google": "Registrarse con Google",
     "hasAccount": "¿Ya tienes cuenta?",
-    "login": "Inicia sesión"
+    "login": "Inicia sesión",
+    "error": {
+      "passwordMatch": "Las contraseñas ingresadas no coinciden.",
+      "terms": "Debes aceptar los términos y condiciones para continuar."
+    }
+  },
+  "verify": {
+    "title": "Verifica tu correo",
+    "subtitle": "Enviamos un código de 6 dígitos a {email}",
+    "codeLabel": "Código de verificación",
+    "codePlaceholder": "000000",
+    "verifyBtn": "Verificar",
+    "verifying": "Verificando...",
+    "resendBtn": "Reenviar código",
+    "resending": "Reenviando...",
+    "error": {
+      "codeLength": "Ingresa el código de 6 dígitos.",
+      "invalid": "El código ingresado no es válido. Inténtalo de nuevo."
+    }
+  },
+  "forgot": {
+    "title": "Recuperar contraseña",
+    "subtitle": "Ingresa tu correo y te enviaremos un código de recuperación.",
+    "verifySubtitle": "Ingresa el código de 6 dígitos enviado a {email}",
+    "sendBtn": "Enviar código",
+    "sending": "Enviando...",
+    "continueBtn": "Continuar",
+    "backToLogin": "Volver al inicio de sesión",
+    "useOtherEmail": "Usar otro correo"
+  },
+  "changePassword": {
+    "title": "Cambiar contraseña",
+    "firstLoginTitle": "Cambia tu contraseña",
+    "recoveryTitle": "Nueva contraseña",
+    "subtitle": "Crea una contraseña segura para tu cuenta.",
+    "firstLoginSubtitle": "Es obligatorio cambiar tu contraseña temporal antes de continuar.",
+    "currentPassword": "Contraseña actual",
+    "newPassword": "Nueva contraseña",
+    "confirmPassword": "Confirmar nueva contraseña",
+    "saveBtn": "Guardar contraseña",
+    "saving": "Guardando...",
+    "successTitle": "Contraseña actualizada",
+    "successMessage": "Tu contraseña se ha cambiado correctamente. Ahora puedes iniciar sesión.",
+    "loginBtn": "Iniciar sesión",
+    "error": {
+      "minLength": "La contraseña debe tener al menos 6 caracteres.",
+      "match": "Las contraseñas no coinciden."
+    }
+  },
+  "notification": {
+    "title": "Notificaciones",
+    "empty": "No tienes notificaciones pendientes",
+    "loading": "Cargando...",
+    "unread": "sin leer"
+  },
+  "erd": {
+    "diagram": "Diagrama",
+    "dictionary": "Diccionario de Datos",
+    "backToDashboard": "← Volver al Dashboard",
+    "entities": "Entidades",
+    "relations": "Relaciones",
+    "detail": "Detalle",
+    "table": "tabla",
+    "resetPositions": "↺ Reset posiciones",
+    "reload": "⟳ Recargar modelo",
+    "loading": "Cargando modelo..."
   },
   "dashboard": {
     "title": "Dashboard",
@@ -91,14 +160,23 @@
     "back": "← Volver",
     "search": "Buscar...",
     "required": "Este campo es obligatorio",
-    "created": "Creado correctamente",
-    "updated": "Actualizado correctamente",
-    "deleted": "Eliminado correctamente",
-    "errorLoad": "Error al cargar datos",
-    "errorSave": "Error al guardar",
-    "errorDelete": "Error al eliminar",
+    "created": "Registro creado exitosamente",
+    "updated": "Registro actualizado exitosamente",
+    "deleted": "Registro eliminado exitosamente",
+    "deactivated": "Registro desactivado exitosamente",
+    "reactivated": "Registro reactivado exitosamente",
+    "errorLoad": "No pudimos cargar los datos. Inténtalo de nuevo.",
+    "errorSave": "No pudimos guardar los cambios. Inténtalo de nuevo.",
+    "errorDelete": "No pudimos eliminar el registro. Inténtalo de nuevo.",
+    "toggleError": "No pudimos cambiar el estado del registro. Inténtalo de nuevo.",
     "confirmDelete": "¿Eliminar este registro?",
-    "noData": "No hay datos disponibles"
+    "confirmDeleteTitle": "Confirmar eliminación",
+    "confirmDeleteBody": "¿Estás seguro de que deseas eliminar este registro? Esta acción no se puede deshacer.",
+    "confirmDeactivateTitle": "Confirmar desactivación",
+    "confirmDeactivateBody": "¿Estás seguro de que deseas desactivar este registro? Podrás reactivarlo después.",
+    "noData": "No hay datos disponibles",
+    "select": "Seleccionar...",
+    "requiredField": "Por favor, completa el campo \"{field}\""
   },
   "common": {
     "loading": "Cargando...",
@@ -110,6 +188,18 @@
     "confirmDelete": "¿Eliminar este registro?",
     "noResults": "No se encontraron resultados",
     "error": "Ha ocurrido un error",
-    "success": "Operación exitosa"
+    "success": "Operación exitosa",
+    "language": "Idioma",
+    "yes": "Sí",
+    "no": "No",
+    "error": {
+      "network": "Parece que no hay conexión a internet. Verifica tu red e inténtalo de nuevo.",
+      "unauthorized": "Tu sesión ha expirado. Por favor, inicia sesión de nuevo.",
+      "forbidden": "No tienes permisos para realizar esta acción.",
+      "notFound": "El recurso solicitado no existe.",
+      "conflict": "Ya existe un registro con esa información.",
+      "server": "Tuvimos un problema en nuestros servidores. Por favor, inténtalo en unos minutos.",
+      "generic": "Algo salió mal. Por favor, inténtalo de nuevo."
+    }
   }
 }

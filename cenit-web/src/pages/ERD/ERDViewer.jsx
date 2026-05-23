@@ -1,5 +1,6 @@
 // src/pages/ERD/ERDViewer.jsx
 // Lee modelo.json desde /public/modelo.json y renderiza el ERD interactivo
+// Ahora incluye toggle para ver el Diccionario de Datos generado desde entidades JPA
 
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { Stage, Layer, Rect, Text, Line, Group, Arrow, Circle } from "react-konva";
@@ -214,7 +215,7 @@ function EntityCard({ entity, position, isSelected, onDragMove, onSelect }) {
   );
 }
 
-// ─── Línea de relación ────────────────────────────────────────────────────────
+// ─── Línea de relación ────────────────────────────────────────────────────
 function RelationLine({ from, to, positions, label }) {
   const posFrom = positions[from];
   const posTo   = positions[to];
@@ -276,9 +277,121 @@ function RelationLine({ from, to, positions, label }) {
   );
 }
 
-// ─── Componente principal ─────────────────────────────────────────────────────
+// ─── Diccionario de Datos (tabla HTML) ────────────────────────────────────
+function DataDictionaryView({ data, onSelectEntity, selected }) {
+  const [filter, setFilter] = useState("");
+  const entities = data?.entities || [];
+  const filtered = filter
+    ? entities.filter(e => e.name.toLowerCase().includes(filter.toLowerCase()))
+    : entities;
+
+  return (
+    <div style={{ flex: 1, overflow: "auto", padding: "24px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+        <input
+          type="text"
+          placeholder="Buscar entidad..."
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          style={{
+            background: "#161b22",
+            border: "1px solid #30363d",
+            borderRadius: "8px",
+            padding: "8px 12px",
+            color: "#c9d1d9",
+            fontSize: "13px",
+            fontFamily: "monospace",
+            width: "280px",
+            outline: "none",
+          }}
+        />
+        <span style={{ color: "#8b949e", fontSize: "12px" }}>
+          {filtered.length} / {entities.length} entidades
+        </span>
+      </div>
+
+      {filtered.map((entity) => (
+        <div
+          key={entity.name}
+          style={{
+            marginBottom: "24px",
+            border: "1px solid #30363d",
+            borderRadius: "10px",
+            overflow: "hidden",
+            background: "#161b22",
+          }}
+        >
+          {/* Header de entidad */}
+          <div
+            style={{
+              background: selected === entity.name ? "#f78166" : "#059669",
+              padding: "10px 14px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              cursor: "pointer",
+            }}
+            onClick={() => onSelectEntity(entity.name === selected ? null : entity.name)}
+          >
+            <div>
+              <span style={{ fontSize: "14px", fontWeight: "bold", color: "#fff", fontFamily: "'JetBrains Mono', monospace" }}>
+                {entity.name}
+              </span>
+              <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.6)", marginLeft: "10px", fontFamily: "monospace" }}>
+                tabla: {entity.table}
+              </span>
+            </div>
+            <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.7)" }}>
+              {entity.fields.length} campos
+            </span>
+          </div>
+
+          {/* Tabla de campos */}
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace" }}>
+            <thead>
+              <tr style={{ background: "#0d1117" }}>
+                <th style={{ padding: "8px 12px", textAlign: "left", color: "#8b949e", fontWeight: 500, borderBottom: "1px solid #30363d" }}>Campo</th>
+                <th style={{ padding: "8px 12px", textAlign: "left", color: "#8b949e", fontWeight: 500, borderBottom: "1px solid #30363d" }}>Tipo</th>
+                <th style={{ padding: "8px 12px", textAlign: "left", color: "#8b949e", fontWeight: 500, borderBottom: "1px solid #30363d" }}>Nullable</th>
+                <th style={{ padding: "8px 12px", textAlign: "left", color: "#8b949e", fontWeight: 500, borderBottom: "1px solid #30363d" }}>Default</th>
+                <th style={{ padding: "8px 12px", textAlign: "left", color: "#8b949e", fontWeight: 500, borderBottom: "1px solid #30363d" }}>Notas</th>
+              </tr>
+            </thead>
+            <tbody>
+              {entity.fields.map((field, i) => (
+                <tr key={field.name} style={{ background: i % 2 === 0 ? "transparent" : "rgba(255,255,255,0.02)" }}>
+                  <td style={{ padding: "7px 12px", color: field.isId ? "#ffa657" : field.name.endsWith("_id") ? "#79c0ff" : "#c9d1d9", borderBottom: "1px solid #21262d" }}>
+                    {field.name}
+                    {field.isId && <span style={{ fontSize: "9px", color: "#ffa657", marginLeft: "6px" }}>PK</span>}
+                  </td>
+                  <td style={{ padding: "7px 12px", color: "#8b949e", borderBottom: "1px solid #21262d" }}>
+                    {field.type}{field.length ? `(${field.length})` : ""}
+                  </td>
+                  <td style={{ padding: "7px 12px", color: field.nullable ? "#8b949e" : "#ff7b72", borderBottom: "1px solid #21262d" }}>
+                    {field.nullable ? "Sí" : "No"}
+                  </td>
+                  <td style={{ padding: "7px 12px", color: "#8b949e", borderBottom: "1px solid #21262d" }}>
+                    {field.default || "—"}
+                  </td>
+                  <td style={{ padding: "7px 12px", color: "#8b949e", borderBottom: "1px solid #21262d", fontSize: "11px" }}>
+                    {field.isEnum ? "Enum" : ""}
+                    {field.isPrePersist ? " @PrePersist" : ""}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─── Componente principal ─────────────────────────────────────────────────
 export default function ERDViewer() {
   const [model,     setModel]     = useState(null);
+  const [ddData,    setDdData]    = useState(null);
+  const [viewMode,  setViewMode]  = useState("diagram"); // "diagram" | "dictionary"
   const [positions, setPositions] = useState({});
   const [selected,  setSelected]  = useState(null);
   const [relations, setRelations] = useState([]);
@@ -297,11 +410,10 @@ export default function ERDViewer() {
       }
     });
     observer.observe(containerRef.current);
-    
     return () => observer.disconnect();
   }, []);
 
-  // Cargar modelo
+  // Cargar modelo (ERD)
   const loadModel = useCallback(async () => {
     try {
       const res  = await fetch("/modelo.json?t=" + Date.now());
@@ -319,11 +431,26 @@ export default function ERDViewer() {
     }
   }, []);
 
+  // Cargar diccionario de datos
+  const loadDictionary = useCallback(async () => {
+    try {
+      const res = await fetch("/data-dictionary.json?t=" + Date.now());
+      const data = await res.json();
+      setDdData(data);
+    } catch (e) {
+      console.error("Error cargando data-dictionary.json:", e);
+    }
+  }, []);
+
   useEffect(() => {
     loadModel();
-    const interval = setInterval(loadModel, 5000);
+    loadDictionary();
+    const interval = setInterval(() => {
+      loadModel();
+      loadDictionary();
+    }, 5000);
     return () => clearInterval(interval);
-  }, [loadModel]);
+  }, [loadModel, loadDictionary]);
 
   const handleDragMove = (name, pos) => {
     setPositions(prev => ({ ...prev, [name]: pos }));
@@ -366,6 +493,42 @@ export default function ERDViewer() {
           >
             ← Volver al Dashboard
           </a>
+        </div>
+
+        {/* Toggle de vista */}
+        <div style={{ padding: "12px 16px", borderBottom: "1px solid #21262d", display: "flex", gap: "8px" }}>
+          <button
+            onClick={() => setViewMode("diagram")}
+            style={{
+              flex: 1,
+              padding: "6px 8px",
+              borderRadius: "6px",
+              border: "1px solid " + (viewMode === "diagram" ? "#1f6feb" : "#30363d"),
+              background: viewMode === "diagram" ? "rgba(31,111,235,0.15)" : "transparent",
+              color: viewMode === "diagram" ? "#79c0ff" : "#8b949e",
+              fontSize: "11px",
+              fontFamily: "monospace",
+              cursor: "pointer",
+            }}
+          >
+            Diagrama
+          </button>
+          <button
+            onClick={() => setViewMode("dictionary")}
+            style={{
+              flex: 1,
+              padding: "6px 8px",
+              borderRadius: "6px",
+              border: "1px solid " + (viewMode === "dictionary" ? "#1f6feb" : "#30363d"),
+              background: viewMode === "dictionary" ? "rgba(31,111,235,0.15)" : "transparent",
+              color: viewMode === "dictionary" ? "#79c0ff" : "#8b949e",
+              fontSize: "11px",
+              fontFamily: "monospace",
+              cursor: "pointer",
+            }}
+          >
+            Diccionario
+          </button>
         </div>
 
         <div style={styles.sidebarSection}>
@@ -414,50 +577,58 @@ export default function ERDViewer() {
         </div>
       </aside>
 
-      {/* ── Canvas ── */}
+      {/* ── Canvas / Diccionario ── */}
       <div ref={containerRef} style={styles.canvas} onClick={() => setSelected(null)}>
-        <Stage width={stageSize.width} height={stageSize.height} draggable>
-          <Layer>
-            {/* Grid de fondo infinito */}
-            {Array.from({ length: 150 }).map((_, i) => (
-              <Line key={`h${i}`} points={[-4000, (i - 75) * 40, 4000, (i - 75) * 40]}
-                stroke={COLORS.grid} strokeWidth={0.5} />
-            ))}
-            {Array.from({ length: 150 }).map((_, i) => (
-              <Line key={`v${i}`} points={[(i - 75) * 40, -4000, (i - 75) * 40, 4000]}
-                stroke={COLORS.grid} strokeWidth={0.5} />
-            ))}
+        {viewMode === "diagram" ? (
+          <Stage width={stageSize.width} height={stageSize.height} draggable>
+            <Layer>
+              {/* Grid de fondo infinito */}
+              {Array.from({ length: 150 }).map((_, i) => (
+                <Line key={`h${i}`} points={[-4000, (i - 75) * 40, 4000, (i - 75) * 40]}
+                  stroke={COLORS.grid} strokeWidth={0.5} />
+              ))}
+              {Array.from({ length: 150 }).map((_, i) => (
+                <Line key={`v${i}`} points={[(i - 75) * 40, -4000, (i - 75) * 40, 4000]}
+                  stroke={COLORS.grid} strokeWidth={0.5} />
+              ))}
 
-            {/* Relaciones */}
-            {relations.map((r, i) => (
-              <RelationLine
-                key={i}
-                from={r.from}
-                to={r.to}
-                positions={positions}
-                label={r.onDelete}
-              />
-            ))}
+              {/* Relaciones */}
+              {relations.map((r, i) => (
+                <RelationLine
+                  key={i}
+                  from={r.from}
+                  to={r.to}
+                  positions={positions}
+                  label={r.onDelete}
+                />
+              ))}
 
-            {/* Entidades */}
-            {model.entities.map(entity => (
-              <EntityCard
-                key={entity.name}
-                entity={entity}
-                position={positions[entity.name] || { x: 100, y: 100 }}
-                isSelected={selected === entity.name}
-                onDragMove={handleDragMove}
-                onSelect={setSelected}
-              />
-            ))}
-          </Layer>
-        </Stage>
+              {/* Entidades */}
+              {model.entities.map(entity => (
+                <EntityCard
+                  key={entity.name}
+                  entity={entity}
+                  position={positions[entity.name] || { x: 100, y: 100 }}
+                  isSelected={selected === entity.name}
+                  onDragMove={handleDragMove}
+                  onSelect={setSelected}
+                />
+              ))}
+            </Layer>
+          </Stage>
+        ) : (
+          <DataDictionaryView
+            data={ddData}
+            selected={selected}
+            onSelectEntity={setSelected}
+          />
+        )}
       </div>
     </div>
   );
 }
 
-// ─── Estilos ──────────────────────────────────────────────────────────────────
+// ─── Estilos ──────────────────────────────────────────────────────────────
 const styles = {
   root: {    position: "fixed",
     top: 0,

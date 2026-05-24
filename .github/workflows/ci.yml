@@ -110,8 +110,8 @@ jobs:
           TAIGA_PASSWORD: ${{ secrets.TAIGA_PASSWORD }}
           TAIGA_PROJECT_ID: ${{ secrets.TAIGA_PROJECT_ID }}
         run: |
-          $commitMsg = git log -1 --pretty=%B
-          python scripts/validar_taiga.py "$commitMsg"
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          python scripts/validar_taiga.py "$COMMIT_MSG"
 
       - name: Comparar Commits
         working-directory: .
@@ -141,6 +141,6 @@ jobs:
           script: |
             cd /opt/cenit
             git pull origin main
-            docker compose up -d --build
-            docker compose ps
+            docker-compose up -d --build
+            docker-compose ps
 

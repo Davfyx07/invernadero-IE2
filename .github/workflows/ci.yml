@@ -145,6 +145,6 @@ jobs:
           script: |
             cd /opt/cenit
             git pull origin main
-            docker-compose up -d --build
-            docker-compose ps
+            docker compose up -d --build
+            docker compose ps
 

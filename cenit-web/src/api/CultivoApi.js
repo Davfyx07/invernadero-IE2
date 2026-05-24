@@ -1,5 +1,5 @@
 // src/api/CultivoApi.js
-// Generado desde frontend.json — no editar manualmente
+// Generado desde frontend.json — no editar manualmentee
 import api from "./axiosConfig";
 
 const BASE = "/cultivos";

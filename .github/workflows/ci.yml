@@ -122,3 +122,40 @@ jobs:
         with:
           name: reporte-cambios
           path: reporte-cambios.md
+
+  # ─── Deploy Backend (VPS) ──────────────────────────────────
+  deploy-backend:
+    name: Deploy Backend to VPS
+    needs: backend
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /opt/cenit
+            git pull origin main
+            docker compose up -d --build
+            docker compose ps
+
+  # ─── Deploy Frontend (Vercel) ──────────────────────────────
+  deploy-frontend:
+    name: Deploy Frontend to Vercel
+    needs: frontend
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+        run: npx vercel --prod --yes --token $VERCEL_TOKEN --cwd cenit-web

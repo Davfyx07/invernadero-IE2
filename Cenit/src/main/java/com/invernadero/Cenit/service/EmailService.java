@@ -1,36 +1,58 @@
 package com.invernadero.cenit.service;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
+
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class EmailService {
 
-    private final JavaMailSender mailSender;
+    private final RestClient restClient;
 
-    @Value("${spring.mail.username:cenit@app.com}")
+    @Value("${resend.api-key:}")
+    private String apiKey;
+
+    @Value("${resend.from-email:onboarding@resend.dev}")
     private String fromEmail;
 
+    public EmailService() {
+        this.restClient = RestClient.builder()
+                .baseUrl("https://api.resend.com")
+                .defaultHeader("Content-Type", "application/json")
+                .build();
+    }
+
     private void sendHtml(String to, String subject, String html) {
+        if (apiKey == null || apiKey.isBlank()) {
+            log.warn("Resend API Key no configurada. Omitiendo envío de correo a {}", to);
+            return;
+        }
+
         try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setFrom(fromEmail);
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(html, true);
-            mailSender.send(message);
-            log.info("Email enviado a {}", to);
-        } catch (MessagingException e) {
-            log.error("Error enviando email a {}: {}", to, e.getMessage());
+            Map<String, Object> body = Map.of(
+                    "from", fromEmail,
+                    "to", List.of(to),
+                    "subject", subject,
+                    "html", html
+            );
+
+            restClient.post()
+                    .uri("/emails")
+                    .header("Authorization", "Bearer " + apiKey)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(body)
+                    .retrieve()
+                    .toBodilessEntity();
+
+            log.info("Email enviado exitosamente a {} vía Resend API", to);
+        } catch (Exception e) {
+            log.error("Error enviando email a {} vía Resend: {}", to, e.getMessage());
         }
     }
 

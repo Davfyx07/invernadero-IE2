@@ -144,18 +144,3 @@ jobs:
             docker compose up -d --build
             docker compose ps
 
-  # ─── Deploy Frontend (Vercel) ──────────────────────────────
-  deploy-frontend:
-    name: Deploy Frontend to Vercel
-    needs: frontend
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Deploy to Vercel
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-        run: npx vercel --prod --yes --token $VERCEL_TOKEN --cwd cenit-web

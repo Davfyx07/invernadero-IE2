@@ -36,6 +36,16 @@ def run_git(args):
     ).strip()
 
 
+class Color:
+    """Códigos ANSI para terminal. En GitHub Actions se renderizan como colores."""
+    HEADER = "\033[95m"
+    OK = "\033[92m"
+    WARN = "\033[93m"
+    FAIL = "\033[91m"
+    BOLD = "\033[1m"
+    RESET = "\033[0m"
+
+
 def categorize(path):
     ext = os.path.splitext(path)[1].lower()
     base = os.path.basename(path).lower()
@@ -46,6 +56,11 @@ def categorize(path):
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="Compara commits y genera reporte")
+    parser.add_argument("--save", action="store_true", help="Guardar reporte como archivo Markdown")
+    args = parser.parse_args()
+
     base_ref = "HEAD~1"
 
     # Obtener commits entre base_ref y HEAD
@@ -141,6 +156,32 @@ def main():
     print("\n" + "=" * 70)
     print("  Fin del analisis")
     print("=" * 70)
+
+    if args.save:
+        report_path = os.path.join(ROOT, "reporte-cambios.md")
+        with open(report_path, "w", encoding="utf-8") as f:
+            f.write(f"# Reporte de Cambios — `{base_ref}..HEAD`\n\n")
+            f.write(f"**{len(commits)} commits** desde el ultimo push.\n\n")
+            f.write("## Commits\n\n")
+            for c in commits:
+                f.write(f"- {c}\n")
+            f.write(f"\n## Archivos ({len(added)} nuevos, {len(modified)} modificados, {len(deleted)} eliminados)\n\n")
+            if added:
+                f.write("### Nuevos\n\n")
+                for p in sorted(added):
+                    f.write(f"- `{p}`\n")
+            if modified:
+                f.write("\n### Modificados\n\n")
+                for p in sorted(modified):
+                    f.write(f"- `{p}` ({categorize(p)})\n")
+            if deleted:
+                f.write("\n### Eliminados\n\n")
+                for p in sorted(deleted):
+                    f.write(f"- `{p}`\n")
+            f.write("\n### Por Categoria\n\n")
+            for cat, count in categories.most_common():
+                f.write(f"- {cat}: {count}\n")
+        print(f"\n[OK] Reporte guardado en: {report_path}")
 
 
 if __name__ == "__main__":

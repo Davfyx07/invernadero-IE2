@@ -2,8 +2,10 @@ package com.invernadero.cenit.service;
 
 import com.invernadero.cenit.entity.Notificacion;
 import com.invernadero.cenit.repository.NotificacionRepository;
+import com.invernadero.cenit.taiga.TaigaTestWatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
+@ExtendWith(TaigaTestWatcher.class)
 class NotificacionServiceTest {
 
     @Autowired private NotificacionRepository notificacionRepository;

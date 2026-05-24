@@ -1,16 +1,24 @@
 package com.invernadero.cenit.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.invernadero.cenit.entity.Cultivo;
-import com.invernadero.cenit.entity.Notificacion;
 import com.invernadero.cenit.entity.Usuario;
 import com.invernadero.cenit.entity.Zona;
 import com.invernadero.cenit.enums.Rol;
 import com.invernadero.cenit.repository.CultivoRepository;
+import com.invernadero.cenit.repository.NotificacionRepository;
 import com.invernadero.cenit.repository.UsuarioRepository;
 import com.invernadero.cenit.repository.ZonaRepository;
-import com.invernadero.cenit.repository.NotificacionRepository;
+import com.invernadero.cenit.taiga.TaigaTestWatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,13 +27,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDate;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @ActiveProfiles("test")
+@ExtendWith(TaigaTestWatcher.class)
 class CultivoServiceTest {
 
     @Autowired private CultivoRepository cultivoRepository;

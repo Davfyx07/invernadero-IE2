@@ -7,8 +7,10 @@ import com.invernadero.cenit.dto.RegisterRequest;
 import com.invernadero.cenit.entity.Usuario;
 import com.invernadero.cenit.enums.Rol;
 import com.invernadero.cenit.repository.UsuarioRepository;
+import com.invernadero.cenit.taiga.TaigaTestWatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
+@ExtendWith(TaigaTestWatcher.class)
 class AuthServiceTest {
 
     @Autowired private UsuarioRepository usuarioRepository;

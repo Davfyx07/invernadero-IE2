@@ -1,49 +1,24 @@
 version: "3.8"
 
 services:
-  postgres:
-    image: postgres:16-alpine
-    container_name: cenit-db
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: cenit
-      POSTGRES_USER: ${DB_USER:-postgres}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./backups:/backups
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d cenit"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   backend:
     build: ./Cenit
     container_name: cenit-api
     restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
     ports:
       - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      DB_URL: jdbc:postgresql://postgres:5432/cenit
-      DB_USER: ${DB_USER:-postgres}
-      DB_PASSWORD: ${DB_PASSWORD:-changeme}
-      JWT_SECRET: ${JWT_SECRET:-changeme}
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
       MAIL_HOST: ${MAIL_HOST:-smtp.gmail.com}
       MAIL_PORT: ${MAIL_PORT:-587}
       MAIL_USERNAME: ${MAIL_USERNAME}
       MAIL_PASSWORD: ${MAIL_PASSWORD}
-      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@cenit.app}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-jdavidlozano07@gmail.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       APP_FRONTEND_URL: ${APP_FRONTEND_URL:-https://cenit.vercel.app}
-
-volumes:
-  pgdata:

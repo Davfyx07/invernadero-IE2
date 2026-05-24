@@ -1,5 +1,7 @@
 #!/bin/bash
 # Deploy script para VPS DigitalOcean
+# Solo backend (BD en Neon, no necesita PostgreSQL local)
+#
 # Uso en el VPS: ./deploy.sh
 # Uso desde GitHub Actions: ssh user@host 'bash -s' < deploy.sh
 
@@ -10,8 +12,7 @@ cd /opt/cenit
 echo "=== Pull latest code ==="
 git pull origin main
 
-echo "=== Build & restart containers ==="
-docker compose pull
+echo "=== Build & restart backend ==="
 docker compose build backend
 docker compose up -d --force-recreate
 

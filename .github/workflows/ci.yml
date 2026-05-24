@@ -82,7 +82,7 @@ jobs:
           cache-dependency-path: cenit-web/package-lock.json
 
       - name: Instalar dependencias
-        run: npm ci
+        run: npm install
 
       - name: Lint
         run: npm run lint

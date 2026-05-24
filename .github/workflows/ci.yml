@@ -88,6 +88,9 @@ jobs:
         run: npm run lint
         continue-on-error: true
 
+      - name: Frontend Tests
+        run: npm run test
+
       - name: Build
         run: npm run build
 
@@ -102,3 +105,7 @@ jobs:
       - name: Validar Commits y Cambios con Taiga
         working-directory: .
         run: python scripts/validar_taiga.py
+
+      - name: Comparar Commits
+        working-directory: .
+        run: python scripts/compare_commits.py

@@ -41,14 +41,19 @@ public class UsuarioService {
     }
 
     public Usuario update(Long id, Usuario updated) {
-        // No permitir sobrescribir password desde update genérico
-        if (updated.getPassword() == null || updated.getPassword().isBlank()) {
-            usuarioRepository.findById(id).ifPresent(existing -> {
-                updated.setPassword(existing.getPassword());
-            });
+        Usuario existing = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("NOT_FOUND:Usuario no encontrado"));
+
+        if (updated.getNombre() != null) existing.setNombre(updated.getNombre());
+        if (updated.getEmail() != null) existing.setEmail(updated.getEmail());
+        if (updated.getRol() != null) existing.setRol(updated.getRol());
+        if (updated.getPassword() != null && !updated.getPassword().isBlank()) {
+            existing.setPassword(updated.getPassword());
         }
-        updated.setId(id);
-        return usuarioRepository.save(updated);
+        // activo se actualiza explícitamente (requerido para soft delete toggles)
+        existing.setActivo(updated.isActivo());
+
+        return usuarioRepository.save(existing);
     }
 
     public void deleteById(Long id) {

@@ -34,7 +34,7 @@ public class LecturaSensorService {
 
     public LecturaSensor update(Long id, LecturaSensor updated) {
         LecturaSensor existing = lecturaSensorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Lectura no encontrada"));
+                .orElseThrow(() -> new RuntimeException("NOT_FOUND:Lectura no encontrada"));
         existing.setZona_id(updated.getZona_id());
         existing.setHumedad(updated.getHumedad());
         existing.setTemperatura(updated.getTemperatura());

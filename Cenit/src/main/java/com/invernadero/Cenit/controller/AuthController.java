@@ -33,7 +33,7 @@ public class AuthController {
     @GetMapping("/me")
     public ResponseEntity<Usuario> me(@AuthenticationPrincipal UserDetails userDetails) {
         Usuario usuario = usuarioRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("NOT_FOUND:Usuario no encontrado"));
         usuario.setPassword(null);
         return ResponseEntity.ok(usuario);
     }

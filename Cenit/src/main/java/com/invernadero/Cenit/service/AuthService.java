@@ -26,7 +26,7 @@ public class AuthService {
 
     public AuthResponse register(RegisterRequest request) {
         if (usuarioRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("El correo ya está registrado");
+            throw new RuntimeException("DUPLICATE_EMAIL:El correo ya está registrado");
         }
 
         String nombreCompleto = request.getNombre();
@@ -62,14 +62,14 @@ public class AuthService {
 
     public AuthResponse login(AuthRequest request) {
         Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Credenciales inválidas"));
+                .orElseThrow(() -> new RuntimeException("EMAIL_NOT_FOUND:No existe una cuenta asociada a este correo electrónico"));
 
         if (!usuario.isActivo()) {
-            throw new RuntimeException("Usuario inactivo");
+            throw new RuntimeException("USER_INACTIVE:Usuario inactivo");
         }
 
         if (!passwordEncoder.matches(request.getPassword(), usuario.getPassword())) {
-            throw new RuntimeException("Credenciales inválidas");
+            throw new RuntimeException("INVALID_CREDENTIALS:Credenciales inválidas");
         }
 
         String token = jwtConfig.generateToken(usuario.getEmail());
@@ -111,31 +111,31 @@ public class AuthService {
 
     public void verifyEmail(String email, String code) {
         boolean ok = otpService.verifyOtp(email, code, "EMAIL_VERIFICATION");
-        if (!ok) throw new RuntimeException("Código inválido o expirado");
+        if (!ok) throw new RuntimeException("OTP_INVALID:Código inválido o expirado");
         Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("NOT_FOUND:Usuario no encontrado"));
         usuario.setEmailVerified(true);
         usuarioRepository.save(usuario);
     }
 
     public void resendVerificationOtp(String email) {
         Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("NOT_FOUND:Usuario no encontrado"));
         otpService.sendOtp(usuario.getEmail(), "EMAIL_VERIFICATION", "verificar tu correo");
     }
 
     public void forgotPassword(String email) {
         Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Correo no registrado"));
-        if (!usuario.isActivo()) throw new RuntimeException("Usuario inactivo");
+                .orElseThrow(() -> new RuntimeException("EMAIL_NOT_FOUND:Correo no registrado"));
+        if (!usuario.isActivo()) throw new RuntimeException("USER_INACTIVE:Usuario inactivo");
         otpService.sendOtp(email, "PASSWORD_RECOVERY", "recuperar tu contraseña");
     }
 
     public void resetPassword(String email, String code, String newPassword) {
         boolean ok = otpService.verifyOtp(email, code, "PASSWORD_RECOVERY");
-        if (!ok) throw new RuntimeException("Código inválido o expirado");
+        if (!ok) throw new RuntimeException("OTP_INVALID:Código inválido o expirado");
         Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("NOT_FOUND:Usuario no encontrado"));
         usuario.setPassword(passwordEncoder.encode(newPassword));
         usuario.setFirstLogin(false);
         usuarioRepository.save(usuario);
@@ -143,9 +143,9 @@ public class AuthService {
 
     public void changePassword(String email, String currentPassword, String newPassword) {
         Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("NOT_FOUND:Usuario no encontrado"));
         if (!passwordEncoder.matches(currentPassword, usuario.getPassword())) {
-            throw new RuntimeException("Contraseña actual incorrecta");
+            throw new RuntimeException("WRONG_PASSWORD:Contraseña actual incorrecta");
         }
         usuario.setPassword(passwordEncoder.encode(newPassword));
         usuario.setFirstLogin(false);

@@ -28,7 +28,7 @@ public class InvernaderoService {
 
     public Invernadero update(Long id, Invernadero updated) {
         Invernadero existing = invernaderoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Invernadero no encontrado"));
+                .orElseThrow(() -> new RuntimeException("NOT_FOUND:Invernadero no encontrado"));
         existing.setNombre(updated.getNombre());
         existing.setUbicacion(updated.getUbicacion());
         existing.setDescripcion(updated.getDescripcion());

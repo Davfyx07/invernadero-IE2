@@ -38,7 +38,7 @@ public class CultivoService {
 
     public Cultivo update(Long id, Cultivo updated) {
         Cultivo existing = cultivoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cultivo no encontrado"));
+                .orElseThrow(() -> new RuntimeException("NOT_FOUND:Cultivo no encontrado"));
         boolean cambioResponsable = updated.getUsuario_id() != null &&
                 !updated.getUsuario_id().equals(existing.getUsuario_id());
         existing.setEspecie(updated.getEspecie());

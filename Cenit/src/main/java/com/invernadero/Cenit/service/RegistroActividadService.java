@@ -38,7 +38,7 @@ public class RegistroActividadService {
 
     public RegistroActividad update(Long id, RegistroActividad updated) {
         RegistroActividad existing = registroActividadRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
+                .orElseThrow(() -> new RuntimeException("NOT_FOUND:Registro no encontrado"));
         boolean cambioResponsable = updated.getUsuario_id() != null &&
                 !updated.getUsuario_id().equals(existing.getUsuario_id());
         existing.setTipo(updated.getTipo());

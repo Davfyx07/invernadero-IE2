@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 @RestController
 @RequestMapping("/api/insumos")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
 public class InsumoController {
 
     private final InsumoService insumoService;

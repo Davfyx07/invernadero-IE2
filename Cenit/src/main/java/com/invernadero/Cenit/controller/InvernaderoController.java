@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 @RestController
 @RequestMapping("/api/invernaderos")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
 public class InvernaderoController {
 
     private final InvernaderoService invernaderoService;

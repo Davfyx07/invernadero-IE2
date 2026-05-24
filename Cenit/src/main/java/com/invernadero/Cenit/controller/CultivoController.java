@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 @RestController
 @RequestMapping("/api/cultivos")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
 public class CultivoController {
 
     private final CultivoService cultivoService;

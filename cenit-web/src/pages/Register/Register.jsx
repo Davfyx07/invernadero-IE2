@@ -61,7 +61,8 @@ export default function Register() {
   };
 
   const handleGoogle = () => {
-    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+    const baseUrl = (import.meta.env.VITE_API_URL || "http://localhost:8080").replace(/\/api$/, "");
+    window.location.href = `${baseUrl}/oauth2/authorization/google`;
   };
 
   const inputClass =

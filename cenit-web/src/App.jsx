@@ -10,6 +10,7 @@ import VerifyEmail from "./pages/Auth/VerifyEmail";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ChangePassword from "./pages/Auth/ChangePassword";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import AdminReports from "./pages/Dashboard/AdminReports";
 import ERDViewer from "./pages/ERD/ERDViewer";
 import InvernaderoList from "./pages/Invernadero/InvernaderoList";
 import ZonaList from "./pages/Zona/ZonaList";
@@ -43,6 +44,7 @@ export default function App() {
               <Route element={<Layout />}>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/erd" element={<ERDViewer />} />
+                <Route path="/admin-reports" element={<AdminReports />} />
                 <Route path="/invernaderos/*" element={<InvernaderoList />} />
                 <Route path="/zonas/*" element={<ZonaList />} />
                 <Route path="/cultivos/*" element={<CultivoList />} />

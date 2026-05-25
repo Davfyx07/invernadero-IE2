@@ -286,7 +286,7 @@ function DataDictionaryView({ data, onSelectEntity, selected }) {
     : entities;
 
   return (
-    <div style={{ flex: 1, overflow: "auto", padding: "24px" }}>
+    <div style={{ flex: 1, overflowY: "auto", maxHeight: "100vh", padding: "24px" }}>
       <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
         <input
           type="text"
@@ -578,7 +578,7 @@ export default function ERDViewer() {
       </aside>
 
       {/* ── Canvas / Diccionario ── */}
-      <div ref={containerRef} style={styles.canvas} onClick={() => setSelected(null)}>
+      <div ref={containerRef} style={{ ...styles.canvas, overflowY: "auto", maxHeight: "100vh" }} onClick={() => setSelected(null)}>
         {viewMode === "diagram" ? (
           <Stage width={stageSize.width} height={stageSize.height} draggable>
             <Layer>

@@ -1,1 +1,8 @@
 .env
+/node_modules
+scripts/__pycache__/conftest.cpython-314-pytest-9.0.3.pyc
+.gitignore
+.gitignore
+scripts/__pycache__/test_e2e.cpython-314-pytest-9.0.3.pyc
+.gitignore
+scripts/__pycache__/validar_taiga.cpython-314.pyc

@@ -3,13 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useI18n } from "../hooks/useI18n";
 
-// Puedes importar o añadir otro icono
-const iconAudit = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-  </svg>
-);
-
 const NAV_LINKS = [
   { to: "/", labelKey: "nav.dashboard", icon: iconDashboard },
   { to: "/invernaderos", labelKey: "nav.invernaderos", icon: iconInvernadero },
@@ -19,7 +12,6 @@ const NAV_LINKS = [
   { to: "/registros", labelKey: "nav.registros", icon: iconRegistro },
   { to: "/sensores", labelKey: "nav.sensores", icon: iconSensor },
   { to: "/erd", labelKey: "nav.erd", icon: iconErd, adminOnly: true },
-  { to: "/admin-reports", labelKey: "Auditoría CI/CD", icon: iconAudit, adminOnly: true },
   { to: "/usuarios", labelKey: "nav.usuarios", icon: iconUsuario, section: "nav.parametrizacion", adminOnly: true },
   { to: "/parametros", labelKey: "nav.parametrizacion", icon: iconSettings, section: "nav.parametrizacion", adminOnly: true },
 ];

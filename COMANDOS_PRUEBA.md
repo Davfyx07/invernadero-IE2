@@ -46,4 +46,4 @@ Calcula las líneas y los últimos commits organizados por carpetas.
 python scripts/compare_commits.py
 ```
 
-*Estás dos últimas también se pueden operar visualmente en el panel Admin de React (`http://localhost:5173/admin-reports`).*
+*Estas dos últimas se revisan desde terminal local con Python y Git; ya no hay panel web para este reporte.*

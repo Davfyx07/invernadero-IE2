@@ -8,9 +8,17 @@ RUN mvn clean package -DskipTests -B
 
 # ─── Etapa 2: Runtime ───────────────────────────────
 FROM eclipse-temurin:21-jre-alpine
+
+# Crear usuario seguro del sistema
 RUN addgroup -S cenit && adduser -S cenit -G cenit
-USER cenit
+
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+
+# Copiar el JAR asegurando que el dueño sea el usuario 'cenit'
+COPY --from=build --chown=cenit:cenit /app/target/*.jar app.jar
+
+# Cambiar al usuario no-root para la ejecución
+USER cenit
+
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]

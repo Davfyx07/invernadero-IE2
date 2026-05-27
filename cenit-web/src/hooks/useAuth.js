@@ -42,7 +42,7 @@ export function useAuth() {
 
   const register = async (data) => {
     const res = await api.post("/auth/register", data);
-    // No hacemos login automático — el usuario debe verificar email primero
+    // No hacemos login automático — el usuario debe verificar email primeroee
     return res.data;
   };
 
